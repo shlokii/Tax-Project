@@ -11,7 +11,7 @@
 	<input type="text" name="accno">
         <input type="submit" value="Continue">
     </form>
-	<a href="/showtaxes/">Show my Tax Transactions</a>
+	<a href="showtaxes/">Show my Tax Transactions</a>
 	</br>
 	<h3>Please Note:Every year a nominal charge of Rs 100 will be deducted from your account in lieu of the Services Provided by the Bank</h3>
 </body>

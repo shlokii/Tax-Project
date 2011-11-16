@@ -24,7 +24,7 @@ class Accounts_dummy(models.Model):
 	amount=models.FloatField()
 	tax_exemption=models.BooleanField()
 	date_account_created=models.DateTimeField()
-	service_tax_cut=models.IntegerField(editable=False,default=0)
+	service_tax_cut=models.IntegerField(null=True,blank=True,editable=False,default=0)
 	def __unicode__(self):
 		return "%s " % self.account_number
 

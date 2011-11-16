@@ -23,7 +23,7 @@ def detail(request):
 				custac.tax_exemption=False;
 			now=datetime.datetime.now()
 			account_created_on=custac.date_account_created;
-			difference=((now-account_created_on).days)/365
+			difference=(now-account_created_on).days
 			service_tax=100
 			if custac.service_tax_cut!=difference:
 				custac.amount=custac.amount-service_tax;

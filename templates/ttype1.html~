@@ -1,0 +1,45 @@
+<html lang="en">
+<head>
+    <title>Online TaxPayment</title>
+</head>
+<body>
+	<h1>Online Tax Payment</h1>
+	<form action="/homePage2/" method="get">
+	{% if custac%}
+	{% if custac.tax_exemption %}
+	<h2>You are an Oldie!.Dont pay any tax :) </h2>
+	{% else %}
+	<br>
+	Customer id: <input type="text" name="custid" value="{{custinfo.customer_id}}"  />
+	Customer name: <input type="text" name="name" value="{{custinfo.customer_name}}"  />
+	
+	<br>
+	Customer address:
+	Street:<input type="text" name="street" value="{{custinfo.cust_street}}"  />
+	City/District:<input type="text" name="city" value="{{custinfo.cust_city}}"  />
+	State:<input type="text" name="state" value="{{custinfo.cust_state}}"  />	
+	</br>
+	Customer Age: <input type="text" name="age" value="{{custinfo.customer_age}}"/>
+	</br>
+	
+	<br>	
+	Account no: <input type="text" name="accno" value="{{ custac.account_number}}" />
+	Tax Type: <input type="text" name="taxtype" value="{{Type.tax_type_id}}"  />
+	Assesment Year:
+	<select name ="ayear">
+  		<option value="2008">2008-2009</option>
+		<option value="2009">2009-2010</option>
+		<option value="2010">2010-2011</option>
+	</select>
+	</br>
+	<br>
+	Enter Tax Amount To be Paid:<input type="text" name="amount" />
+	</br>	
+{% else %}
+    <p>No Accounts.</p>
+{% endif %}
+
+	  <input type="submit" value="Confirm Payment">{% endif %}
+   </form>
+</body>
+</html>
