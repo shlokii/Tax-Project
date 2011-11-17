@@ -4,8 +4,6 @@ import datetime
 class Taxtype(models.Model):
 	tax_type_id=models.IntegerField(primary_key=True)
 	tax_type_name=models.CharField(max_length=150)
-	def __unicode__(self):
-		return "%s " % self.tax_type_name
 
 class BackOffice_dummy(models.Model):
 	customer_id=models.IntegerField(primary_key=True)
@@ -22,9 +20,6 @@ class Accounts_dummy(models.Model):
 	customer_id=models.ForeignKey(BackOffice_dummy,to_field='customer_id')
 	ATM_PIN=models.IntegerField(unique=True)
 	amount=models.FloatField()
-	tax_exemption=models.BooleanField()
-	date_account_created=models.DateTimeField()
-	service_tax_cut=models.IntegerField(editable=False,default=0)
 	def __unicode__(self):
 		return "%s " % self.account_number
 

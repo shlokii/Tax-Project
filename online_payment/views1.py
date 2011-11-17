@@ -17,30 +17,12 @@ def detail(request):
 		try:
 	        	custac = Accounts_dummy.objects.get(account_number=q)
 			custinfo=BackOffice_dummy.objects.get(customer_id=custac.customer_id_id)
-			if custinfo.customer_age>=60:
-				custac.tax_exemption=True;
-			else:
-				custac.tax_exemption=False;
-			now=datetime.datetime.now()
-			account_created_on=custac.date_account_created;
-			difference=((now-account_created_on).days)/365
-			service_tax=100
-			if custac.service_tax_cut!=difference:
-				custac.amount=custac.amount-service_tax;
-				custac.save()
-				custac.service_tax_cut=difference
-				custac.save()
-				
 		except:
-			error="Invalid Account Number.It does Not Exists."
-			return render_to_response('error.html',locals())
-					
+			return HttpResponseRedirect("/onlinePayment/") 		
 		return render_to_response('ttype1.html',locals())		
 		#return render_to_response('ttype1.html',{'custac':ac , 'custinfo': cust})
-    	#else:
-        	#return HttpResponseRedirect('/onlinePayment/')
-
-
+    	else:
+        	return HttpResponseRedirect('/onlinePayment/')
 def confirm_payment(request):
 	if 'amount' in request.GET and request.GET['amount']:
 		a=request.GET['amount']
@@ -78,19 +60,11 @@ def onl_validatin(request):
 			custac.save()
 			return render_to_response('done.html',locals())
 		else:
-			error="Invalid PIN Entered.Try Again"
-			return render_to_response('error.html',locals())
+			return HttpResponseRedirect('homePage2/')
 	else:
 		return HttpResponse('Please enter Amount')
 
-def show(request):
-		if 'accno' in request.GET and request.GET['accno']:
-			account=Accounts_dummy.objects.get(account_number=request.GET['accno'])
-			alltax=Tax_transaction.objects.filter(account_number=account.account_number)
-			return render_to_response('show.html',locals())
-		else:
-			return render_to_response('show.html')
-		
+
 
 
 
