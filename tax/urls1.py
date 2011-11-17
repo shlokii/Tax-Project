@@ -1,5 +1,5 @@
-from django.conf.urls.defaults import patterns, include, url
-from online_payment.views import onli,detail,confirm_payment,onl_validatin,show
+from django.conf.urls import patterns, include, url
+from online_payment.views import onli,detail,confirm_payment,onl_validatin
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
@@ -12,9 +12,7 @@ urlpatterns = patterns('',
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     (r'^onlinePayment/$', onli),
-    #(r'^error/$', onli),
-    (r'^homePage/$', detail),
-    (r'^showtaxes/$',show),
+    (r'^onlinePayment/homePage/$', detail),
     (r'^homePage2/$', confirm_payment),
      (r'^homePage3/$', onl_validatin),
     # Uncomment the next line to enable the admin:

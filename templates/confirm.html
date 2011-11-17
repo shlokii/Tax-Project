@@ -1,20 +1,36 @@
 <html lang="en">
 <head>
-    <title>Online TaxPayment</title>
+    <title>Online Transaction</title>
+<link rel="stylesheet" type="text/css" href= "/static/base.css" />
 </head>
+<SCRIPT LANGUAGE="JavaScript">
+function isNumeric(elem){
+	var numericExpression = /^[0-9]+$/;
+	if(elem.value.match(numericExpression) && elem.value !=""){
+		return true;
+	}else{
+		alert("Please Enter Numeric Values.");
+		elem.focus();
+		return false;
+	}
+}
+</SCRIPT>
 <body>
-	<h1>Online Tax Payment</h1>
+	<h1>Online Transaction</h1>
 	<form action="/homePage3/" method="get">
-	<br>
-	Customer id: <input type="text" name="id" value="{{custid}}" />
-	Customer name: <input type="text" name="name" value="{{custname}}" />
-	Tax Type: <input type="text" name="taxtype" value="{{ttype}}"  />
-	Account no: <input type="text" name="accno" value="{{accno}}" />
-	Amount:<input type="text" name="amount" value="{{a}}" />
-	Assesment Year:<input type="text" name="ayear" value="{{assyear}}" />
+	
+	<input type="hidden" name="id" value="{{custid}}" />
+	<input type="hidden" name="name" value="{{custname}}" />
+	<input type="hidden" name="taxtype" value="{{ttype}}"  />
+	<input type="hidden" name="ayear" value="{{assyear}}" />	
+	<table border=0>
+	
+	<tr><td>Account no: {{accno}}<input type="hidden" name="accno" value="{{accno}}" /></td></tr>
+	<tr><td>Amount: Rs. {{a}}<input type="hidden" name="amount" value="{{a}}" /></td></tr>
+	
 	</br>	
-	Enter Your Pin:<input type="text" name="pin"/>
-	<input type="submit" value="Confirm Payment">
+	<tr><td>Enter Your Pin:<input type="password" name="pin"/></td></tr>
+	<tr><td><input type="submit" value="Confirm Payment" onclick="return isNumeric(pin);"></td></tr>
    </form>
 </body>
 </html>

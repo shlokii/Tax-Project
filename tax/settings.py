@@ -56,7 +56,7 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = ''
+STATIC_ROOT = '/home/shlok/django_projects/tax/templates'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -99,7 +99,7 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'tax.urls'
 
-TEMPLATE_DIRS = ("/home/digvijay/pyjango/Tax-Project/templates"
+TEMPLATE_DIRS = ("/home/shlok/django_projects/tax/templates"
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -127,9 +127,15 @@ INSTALLED_APPS = (
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
     'handlers': {
         'mail_admins': {
             'level': 'ERROR',
+            'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
         }
     },

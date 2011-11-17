@@ -1,17 +1,55 @@
 <html lang="en">
 <head>
     <title>Online TaxPayment</title>
+	<link rel="stylesheet" type="text/css" href= "/static/base.css" />
 </head>
+<SCRIPT LANGUAGE="JavaScript">
+
+function radio_button_checker()
+{
+	var radio_choice = false;
+	for (counter = 0; counter < radio_form.type.length; counter++)
+		{if (radio_form.type[counter].checked)
+		radio_choice = true; 
+		}
+
+	if (!radio_choice)
+	{
+	alert("Please select the Type of Tax.")
+	}
+	return radio_choice;	
+}
+function isNumeric(elem){
+	var numericExpression = /^[0-9]+$/;
+	if(elem.value.match(numericExpression) && elem.value !=""){
+		return true;
+	}else{
+		alert("Please Enter Numeric Values.");
+		elem.focus();
+		return false;
+	}
+}
+function validate(elem){
+	
+	return radio_button_checker() && isNumeric(elem);
+}
+</SCRIPT>
 <body>
 	<h1>Online Tax Payment</h1>
-	<form action="/homePage/" method="get">
+	<form action="/homePage/" id="form" method="get" name="radio_form">
+	<br>
+	<h3>Please Choose the Tax Type You want to pay:</h3>	
+	</br>	
 	{% for item in tax_list %}
     	<input type="radio" name="type" value="{{ item.tax_type_id }}" /> {{ item.tax_type_name }}<br />
 	{% endfor %}
+	<br>
+	<h3>Please Enter Your Account Number:</h3>
+	</br>	
 	<input type="text" name="accno">
-        <input type="submit" value="Continue">
+        <input type="submit" value="Continue" onclick="return validate(accno);" >
     </form>
-	<a href="/showtaxes/">Show my Tax Transactions</a>
+<a href="/showtaxes/">Show my Tax Transactions</a>
 	</br>
 	<h3>Please Note:Every year a nominal charge of Rs 100 will be deducted from your account in lieu of the Services Provided by the Bank</h3>
 </body>
