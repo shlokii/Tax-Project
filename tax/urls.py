@@ -1,9 +1,8 @@
 from django.conf.urls.defaults import patterns, include, url
 from online_payment.views import onli,detail,confirm_payment,onl_validatin,show
-<<<<<<< HEAD
-=======
+
 import api
->>>>>>> 167e14c3556efda588de90088769ec7042bc95f4
+
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()

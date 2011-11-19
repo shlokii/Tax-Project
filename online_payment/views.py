@@ -122,10 +122,13 @@ def onl_validatin(request):
 def show(request):
 		if 'accno' in request.GET and request.GET['accno']:
 			##Getting the account object corresponding to the given account number in the request.GET dictionary
-			account=Accounts_dummy.objects.get(account_number=request.GET['accno'])
+			try:
+				account=Accounts_dummy.objects.get(account_number=request.GET['accno'])
 			##Getting the Tax transaction object corresponding to the given account number
-			alltax=Tax_transaction.objects.filter(account_number=account.account_number)
-			return render_to_response('show.html',locals())
+				alltax=Tax_transaction.objects.filter(account_number=account.account_number)
+			except:
+				error="Invalid Account Number.It Does not exists."
+			return render_to_response('error.html',locals())
 		else:
 			return render_to_response('show.html')
 		

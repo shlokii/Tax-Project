@@ -3,16 +3,29 @@
     <title>Tax Transaction History</title>
 <link rel="stylesheet" type="text/css" href= "/static/base.css" />
 </head>
+<SCRIPT LANGUAGE="JavaScript">
+function isNumeric(elem){
+	var numericExpression = /^[0-9]+$/;
+	if(elem.value.match(numericExpression) && elem.value !=""){
+		return true;
+	}else{
+		alert("Please Enter Numeric Values.");
+		elem.focus();
+		return false;
+	}
+}
+</SCRIPT>
+
+
+
 <body>
 	<h1>Show All My Tax Transaction History</h1>
 	<form action="#" method="get">
 	Enter your Account Number:<input type="text" name="accno">
-        <input type="submit" value="Continue">
+        <input type="submit" value="Continue" onclick= "return isNumeric(accno);">
     </form>
-<<<<<<< HEAD
+
 	<a href="/onlinePayment/">Go Back To Home Page</a>
-=======
->>>>>>> 167e14c3556efda588de90088769ec7042bc95f4
 	{% if alltax %}
 		<table id="shwtax">
 			<tr>
