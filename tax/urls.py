@@ -1,5 +1,6 @@
 from django.conf.urls.defaults import patterns, include, url
 from online_payment.views import onli,detail,confirm_payment,onl_validatin,show
+import api
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
@@ -16,7 +17,8 @@ urlpatterns = patterns('',
     (r'^homePage/$', detail),
     (r'^showtaxes/$',show),
     (r'^homePage2/$', confirm_payment),
-     (r'^homePage3/$', onl_validatin),
+    (r'^homePage3/$', onl_validatin),
+    (r'^api/taxdetails/',include('api.urls')),
     # Uncomment the next line to enable the admin:
      url(r'^admin/', include(admin.site.urls)),
 )
