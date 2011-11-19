@@ -1,0 +1,40 @@
+<html lang="en">
+<head>
+    <title>Tax Transaction History</title>
+</head>
+<body>
+	<h1>Show All My Tax Transaction History</h1>
+	<form action="#" method="get">
+	Enter your Account Number:<input type="text" name="accno">
+        <input type="submit" value="Continue">
+    </form>
+	{% if alltax %}
+		<table>
+			<tr>
+				<td>Customer ID</td>
+				<td>Account Number</td>
+				<td>Tax Type</td>
+				<td>Transaction ID</td>
+				<td>Date</td>
+				<td>Amount Paid</td>
+				<td>Assessment Year</td>
+			</tr>	
+		{% for tax in alltax %}
+			<tr>
+				<td>{{tax.customer_id}}</td>
+				<td>{{tax.account_number}}</td>
+				<td>{{tax.tax_type_id}}</td>
+				<td>{{tax.transaction_id}}</td>
+				<td>{{tax.date}}</td>
+				<td>{{tax.amount_paid}}</td>
+				<td>{{tax.asses_year}}</td>
+			</tr>
+		{% endfor %}
+			
+		</table>
+		<h3>Service Tax Cut For {{account.service_tax_cut}} Years (Rs 100 per year) </h3>	
+	{% endif %}
+	
+	
+</body>
+</html>

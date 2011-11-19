@@ -1,0 +1,18 @@
+<html lang="en">
+<head>
+    <title>Online TaxPayment</title>
+</head>
+<body>
+	<h1>Online Tax Payment</h1>
+	<form action="/homePage/" method="get">
+	{% for item in tax_list %}
+    	<input type="radio" name="type" value="{{ item.tax_type_id }}" /> {{ item.tax_type_name }}<br />
+	{% endfor %}
+	<input type="text" name="accno">
+        <input type="submit" value="Continue">
+    </form>
+	<a href="showtaxes/">Show my Tax Transactions</a>
+	</br>
+	<h3>Please Note:Every year a nominal charge of Rs 100 will be deducted from your account in lieu of the Services Provided by the Bank</h3>
+</body>
+</html>
