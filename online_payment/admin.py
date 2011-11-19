@@ -7,15 +7,15 @@ class TaxAdmin(admin.ModelAdmin):
 	search_fields=['customer_id','account_number','transaction_id','date',]
     
 class BOAdmin(admin.ModelAdmin):
-	list_display=('customer_id',)
+	list_display=('customer_id','customer_name','customer_age','cust_street','cust_city','cust_state')
 
 class AAdmin(admin.ModelAdmin):
-	list_display=('account_number',)
+	list_display=('account_number','customer_id','ATM_PIN','amount','tax_exemption','date_account_created','service_tax_cut')
 
 class OTAdmin(admin.ModelAdmin):
-	list_display=('transaction_id',)
+	list_display=('transaction_id','account_number','amount_paid')
 class TTAdmin(admin.ModelAdmin):
-	list_display=('tax_type_id',)
+	list_display=('tax_type_id','tax_type_name')
      
 admin.site.register(Tax_transaction,TaxAdmin)
 admin.site.register(BackOffice_dummy,BOAdmin)

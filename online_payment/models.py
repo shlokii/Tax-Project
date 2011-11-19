@@ -39,7 +39,7 @@ class Tax_transaction(models.Model):
 	customer_id=models.ForeignKey(BackOffice_dummy,to_field='customer_id')
 	account_number=models.ForeignKey(Accounts_dummy,to_field='account_number')
 	tax_type_id=models.ForeignKey(Taxtype,to_field='tax_type_id')
-	transaction_id=models.ForeignKey(Online_Transaction_dummy,to_field='transaction_id')
+	transaction_id=models.ForeignKey(Online_Transaction_dummy,to_field='transaction_id',primary_key=True)
 	date=models.DateField()
 	amount_paid=models.FloatField()
 	asses_year=models.CharField(max_length=50)

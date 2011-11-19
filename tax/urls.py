@@ -11,6 +11,7 @@ urlpatterns = patterns('',
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+    (r'^homePage3/onlinePayment/$', onli),
     (r'^onlinePayment/$', onli),
     #(r'^error/$', onli),
     (r'^homePage/$', detail),
