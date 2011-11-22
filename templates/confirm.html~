@@ -17,7 +17,7 @@ function isNumeric(elem){
 </SCRIPT>
 <body>
 	<h1>Online Transaction</h1>
-	<form action="/homePage3/" method="get">
+	<form action="/homePage3/" method="post">
 	
 	<input type="hidden" name="id" value="{{custid}}" />
 	<input type="hidden" name="name" value="{{custname}}" />

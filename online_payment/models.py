@@ -12,7 +12,7 @@ class Taxtype(models.Model):
 	##@param self: The object calling this method
 	##@return string: The taxtype name
 	def __unicode__(self):
-		return "%s " % self.tax_type_name
+		return "%s " % self.tax_type_id
 
 ##This is used to create a BackOffice dummy table in the database,which containes customers' records.
 ##We used the dummy because we needed the API from another group,which was not ready
@@ -33,7 +33,7 @@ class BackOffice_dummy(models.Model):
 	##@param self: The object calling this method
 	##@return string: The Customer's name
 	def __unicode__(self):
-		return "%s " % self.customer_name
+		return "%s " % self.customer_id
 	
 ##This is used to create an Accounts dummy table in the database,which containes customers' accounts.
 ##We used the dummy because we needed the API from another group,which was not ready

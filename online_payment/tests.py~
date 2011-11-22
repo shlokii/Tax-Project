@@ -55,13 +55,13 @@ class PrintTransaction(TestCase):
     
   def test_confirm_payment(self):
     c=Client()
-    response = c.get('/homePage2/',{'custid': 1123,'name':"manu" ,'street':"asdfasd",'city':"hyderabad",'state':"AP",'age':13,'accno': 123,'taxtype':1,'ayear':2012,'amount':1000})
+    response = c.post('/homePage2/',{'custid': 1123,'name':"manu" ,'street':"asdfasd",'city':"hyderabad",'state':"AP",'age':13,'accno': 123,'taxtype':1,'ayear':2012,'amount':1000})
    ## print type(response)
     self.assertNotEqual(response.status_code,200)
   
   def test_confirm_payment1(self):
     c=Client()
-    response = c.get('/homePage2/',{'custid': 1123,'name':"manu" ,'street':"asdfasd",'city':"hyderabad",'state':"AP",'age':13,'accno': 1000,'taxtype':1,'ayear':2012,'amount':1000})
+    response = c.post('/homePage2/',{'custid': 1123,'name':"manu" ,'street':"asdfasd",'city':"hyderabad",'state':"AP",'age':13,'accno': 1000,'taxtype':1,'ayear':2012,'amount':1000})
    ## print type(response)
     self.assertEqual(response.status_code,200)
   

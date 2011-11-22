@@ -1,45 +1,72 @@
 <html lang="en">
 <head>
     <title>Online TaxPayment</title>
+	<link rel="stylesheet" type="text/css" href= "/static/base.css" />
 </head>
+<SCRIPT LANGUAGE="JavaScript">
+function isNumeric(elem){
+	var numericExpression = /^[0-9]+$/;
+	if(elem.value.match(numericExpression) && elem.value !=""){
+		return true;
+	}else{
+		alert("Please Enter Numeric Values.");
+		elem.focus();
+		return false;
+	}
+}
+</SCRIPT>
 <body>
 	<h1>Online Tax Payment</h1>
-	<form action="/homePage2/" method="get">
+	<form action="/homePage2/" method="post">
 	{% if custac%}
-	{% if custac.tax_exemption %}
-	<h2>You are an Oldie!.Dont pay any tax :) </h2>
-	{% else %}
-	<br>
-	Customer id: <input type="text" name="custid" value="{{custinfo.customer_id}}"  />
-	Customer name: <input type="text" name="name" value="{{custinfo.customer_name}}"  />
-	
-	<br>
-	Customer address:
-	Street:<input type="text" name="street" value="{{custinfo.cust_street}}"  />
-	City/District:<input type="text" name="city" value="{{custinfo.cust_city}}"  />
-	State:<input type="text" name="state" value="{{custinfo.cust_state}}"  />	
-	</br>
-	Customer Age: <input type="text" name="age" value="{{custinfo.customer_age}}"/>
-	</br>
-	
-	<br>	
-	Account no: <input type="text" name="accno" value="{{ custac.account_number}}" />
-	Tax Type: <input type="text" name="taxtype" value="{{Type.tax_type_id}}"  />
-	Assesment Year:
+	<input type="hidden" name="custid" value="{{custinfo.customer_id}}"  />
+	<input type="hidden" name="name" value="{{custinfo.customer_name}}"  />
+	<input type="hidden" name="street" value="{{custinfo.cust_street}}"  />	
+	<input type="hidden" name="city" value="{{custinfo.cust_city}}"  />	
+	<input type="hidden" name="state" value="{{custinfo.cust_state}}"  />
+	<input type="hidden" name="age" value="{{custinfo.customer_age}}"/>
+	<input type="hidden" name="accno" value="{{ custac.account_number}}" />	
+	<input type="hidden" name="taxtype" value="{{Type.tax_type_id}}"  />	
+	<table border=0>
+	<tr>
+	<td><font color="blue">Customer id:</font> {{custinfo.customer_id}} </td>
+	</tr>	
+	<tr>
+	<td><font color="blue">Customer name:</font> {{custinfo.customer_name}}</td>
+	</tr>
+	<tr>
+	<td><font color="blue">Customer address:</font></td>
+	</tr>
+	<tr>
+	<td><font color="blue">Street:</font>{{custinfo.cust_street}}</td>
+	<td><font color="blue">City/District:</font> {{custinfo.cust_city}}</td>
+	<td><font color="blue">State:</font> {{custinfo.cust_state}}</td>
+	</tr>
+	<tr>
+	<td><font color="blue">Customer Age: </font>{{custinfo.customer_age}}</td>
+	</tr>
+	<tr>
+	<td><font color="blue">Account no:</font> {{ custac.account_number}}</td>
+	</tr><tr>
+        <td><font color="blue">Tax Type:</font> {{Type.tax_type_id}}</td>
+	</tr><tr>
+	<td><font color="blue">Assesment Year:</font>
 	<select name ="ayear">
   		<option value="2008">2008-2009</option>
 		<option value="2009">2009-2010</option>
 		<option value="2010">2010-2011</option>
-	</select>
-	</br>
-	<br>
-	Enter Tax Amount To be Paid:<input type="text" name="amount" />
-	</br>	
-{% else %}
-    <p>No Accounts.</p>
-{% endif %}
+	</select></td>
+	</tr>
+	<tr>
 
-	  <input type="submit" value="Confirm Payment">{% endif %}
+	<td><font color="blue">Enter Tax Amount To be Paid:</font><input type="text" name="amount" /></td>
+
+	</tr>	
+{% else %}
+    <tr><td><p>No Accounts.</p></td></tr>
+{% endif %}
+	  <tr><td><input type="submit" value="Transfer to ITO" onclick="return isNumeric(amount);"></td></tr>
+	</table>
    </form>
 </body>
 </html>

@@ -17,7 +17,7 @@ def onli(request):
 ##@param request: This is the HTTP Request object,which is formed when we request for the starting page of our App.
 ##@return response:An HTTP Response Object,containing the name of the template which is to be rendered,and its context,which contains all the local variables of this function
 def detail(request):
-	if 'accno' and 'type' in request.GET and request.GET['accno']:
+	if 'accno' in request.GET and 'type' in request.GET and request.GET['accno']:
 		##Getting the Account number from the request.GET dictionary
 	        q = request.GET['accno']
 		##Getting the Tax type from the request.GET dictionary
@@ -29,7 +29,6 @@ def detail(request):
 	        	custac = Accounts_dummy.objects.get(account_number=q)
 			##Getting the row from the BackOffice dummy table with cust.customer id
 			custinfo=BackOffice_dummy.objects.get(customer_id=custac.customer_id_id)
-			
 			if custinfo.customer_age>=60:
 				custac.tax_exemption=True;
 			else:
@@ -52,13 +51,14 @@ def detail(request):
 					
 		return render_to_response('ttype1.html',locals())		
 		#return render_to_response('ttype1.html',{'custac':ac , 'custinfo': cust})
-    	#else:
-        	#return HttpResponseRedirect('/onlinePayment/')
+    	else:
+        	return HttpResponseRedirect('/onlinePayment/')
 
 
 ##This method/view is called when the customer enters the amount of Tax he wants to pay,and enters a payment portal.
 ##@param request: This is the HTTP Request object,which is formed when we request for the starting page of our App.
 ##@return response:An HTTP Response Object,containing the name of the template which is to be rendered,and its context,which contains all the local variables of this function
+
 def confirm_payment(request):
 	if 'amount' in request.GET and request.GET['amount']:
 		##Getting the Amount from the request.GET dictionary
@@ -73,6 +73,10 @@ def confirm_payment(request):
 		accno=request.GET['accno']
 		##Getting the Assesment year from the request.GET dictionary
 		assyear=request.GET['ayear']
+		account=Accounts_dummy.objects.get(account_number=accno)
+		if account.amount<float(a):
+			error="Too Low Balance In Your Amount.Please Refill it!!"
+			return render_to_response('error.html',locals())
 		return render_to_response('confirm.html',locals())
 	else:
 		return HttpResponse('Please enter Amount')
@@ -109,6 +113,7 @@ def onl_validatin(request):
 			return render_to_response('done.html',locals())
 		else:
 			##Saving the error so that it can be showed in the rendered HTML page
+
 			error="Invalid PIN Entered.Try Again"
 			return render_to_response('error.html',locals())
 	else:
@@ -121,9 +126,13 @@ def onl_validatin(request):
 def show(request):
 		if 'accno' in request.GET and request.GET['accno']:
 			##Getting the account object corresponding to the given account number in the request.GET dictionary
-			account=Accounts_dummy.objects.get(account_number=request.GET['accno'])
+			try:
+				account=Accounts_dummy.objects.get(account_number=request.GET['accno'])
 			##Getting the Tax transaction object corresponding to the given account number
-			alltax=Tax_transaction.objects.filter(account_number=account.account_number)
+				alltax=Tax_transaction.objects.filter(account_number=account.account_number)
+			except:
+				error="Invalid Account Number.It Does not exists."
+				return render_to_response('error.html',locals())
 			return render_to_response('show.html',locals())
 		else:
 			return render_to_response('show.html')
