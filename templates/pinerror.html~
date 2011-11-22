@@ -1,0 +1,21 @@
+<html lang="en">
+<head>
+    <title>Online TaxPayment</title>
+<link rel="stylesheet" type="text/css" href= "/static/base.css" />
+</head>
+<body>
+	<h1>Online Tax Payment</h1>
+	<form action="/pinErr/" method="post">
+	Shlok<h1>{{a}}</h1>
+	{% csrf_token %}
+	<input type="hidden" name="id" value="{{cid}}" />
+	<input type="hidden" name="name" value="{{custname}}" />
+	<input type="hidden" name="taxtype" value="{{ttid}}"  />
+	<input type="hidden" name="ayear" value="{{assyear}}" />
+	<input type="hidden" name="accno" value="{{accno}}"/>
+	<input type="hidden" name="amount" value="{{a}}"/>
+	<br><h2>{{error}}</h2></br>
+        <input type="submit" value="Click to enter PIN again">
+    </form>
+</body>
+</html>

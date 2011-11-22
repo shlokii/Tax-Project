@@ -6,9 +6,12 @@ var NAVTREE =
       [ "online_payment::models::Accounts_dummy", "classonline__payment_1_1models_1_1Accounts__dummy.html", null ],
       [ "online_payment::models::BackOffice_dummy", "classonline__payment_1_1models_1_1BackOffice__dummy.html", null ],
       [ "online_payment::admin::BOAdmin", "classonline__payment_1_1admin_1_1BOAdmin.html", null ],
+      [ "online_payment::forms::ContactForm", "classonline__payment_1_1forms_1_1ContactForm.html", null ],
       [ "online_payment::models::Online_Transaction_dummy", "classonline__payment_1_1models_1_1Online__Transaction__dummy.html", null ],
       [ "online_payment::admin::OTAdmin", "classonline__payment_1_1admin_1_1OTAdmin.html", null ],
-      [ "online_payment::tests::SimpleTest", "classonline__payment_1_1tests_1_1SimpleTest.html", null ],
+      [ "online_payment::tests::PrintTransaction", "classonline__payment_1_1tests_1_1PrintTransaction.html", null ],
+      [ "online_payment::models::Service_Tax", "classonline__payment_1_1models_1_1Service__Tax.html", null ],
+      [ "online_payment::admin::ServiceAdmin", "classonline__payment_1_1admin_1_1ServiceAdmin.html", null ],
       [ "online_payment::models::Tax_transaction", "classonline__payment_1_1models_1_1Tax__transaction.html", null ],
       [ "online_payment::admin::TaxAdmin", "classonline__payment_1_1admin_1_1TaxAdmin.html", null ],
       [ "online_payment::models::Taxtype", "classonline__payment_1_1models_1_1Taxtype.html", null ],
@@ -19,28 +22,33 @@ var NAVTREE =
     [ "Namespace List", "namespaces.html", [
       [ "online_payment", "namespaceonline__payment.html", null ],
       [ "online_payment::admin", "namespaceonline__payment_1_1admin.html", null ],
+      [ "online_payment::forms", "namespaceonline__payment_1_1forms.html", null ],
       [ "online_payment::models", "namespaceonline__payment_1_1models.html", null ],
       [ "online_payment::tests", "namespaceonline__payment_1_1tests.html", null ],
       [ "online_payment::views", "namespaceonline__payment_1_1views.html", null ],
       [ "tax", "namespacetax.html", null ],
       [ "tax::settings", "namespacetax_1_1settings.html", null ],
-      [ "tax::urls", "namespacetax_1_1urls.html", null ]
+      [ "tax::urls", "namespacetax_1_1urls.html", null ],
+      [ "tax::urls1", "namespacetax_1_1urls1.html", null ]
     ] ],
     [ "Namespace Members", "namespacemembers.html", null ],
     [ "File List", "files.html", [
       [ "online_payment/__init__.py", "online__payment_2____init_____8py.html", null ],
       [ "online_payment/admin.py", "admin_8py.html", null ],
+      [ "online_payment/forms.py", "forms_8py.html", null ],
       [ "online_payment/models.py", "models_8py.html", null ],
       [ "online_payment/tests.py", "tests_8py.html", null ],
       [ "online_payment/views.py", "views_8py.html", null ],
       [ "tax/__init__.py", "tax_2____init_____8py.html", null ],
       [ "tax/settings.py", "settings_8py.html", null ],
-      [ "tax/urls.py", "urls_8py.html", null ]
+      [ "tax/urls.py", "urls_8py.html", null ],
+      [ "tax/urls1.py", "urls1_8py.html", null ]
     ] ],
     [ "Directories", "dirs.html", [
       [ "online_payment", "dir_896d1335d0a7cbf326fa861f6c268fe3.html", [
         [ "__init__.py", "online__payment_2____init_____8py.html", null ],
         [ "admin.py", "admin_8py.html", null ],
+        [ "forms.py", "forms_8py.html", null ],
         [ "models.py", "models_8py.html", null ],
         [ "tests.py", "tests_8py.html", null ],
         [ "views.py", "views_8py.html", null ]
@@ -48,7 +56,8 @@ var NAVTREE =
       [ "tax", "dir_c13036086f6999bc7505097da36f494d.html", [
         [ "__init__.py", "tax_2____init_____8py.html", null ],
         [ "settings.py", "settings_8py.html", null ],
-        [ "urls.py", "urls_8py.html", null ]
+        [ "urls.py", "urls_8py.html", null ],
+        [ "urls1.py", "urls1_8py.html", null ]
       ] ]
     ] ]
   ] ]

@@ -81,7 +81,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00012"></a>00012         <span class="comment">##@param self: The object calling this method</span>
 <a name="l00013"></a>00013         <span class="comment">##@return string: The taxtype name</span>
 <a name="l00014"></a><a class="code" href="classonline__payment_1_1models_1_1Taxtype.html#a61ed6c1914e7b93704ebcd6146ed5e59">00014</a>         <span class="keyword">def </span><a class="code" href="classonline__payment_1_1models_1_1Taxtype.html#a61ed6c1914e7b93704ebcd6146ed5e59" title="Used to print the Taxtype name in place of the object.">__unicode__</a>(self):
-<a name="l00015"></a>00015                 <span class="keywordflow">return</span> <span class="stringliteral">&quot;%s &quot;</span> % self.<a class="code" href="classonline__payment_1_1models_1_1Taxtype.html#ac0a32d0a626124cb678e0253fcfdb435" title="Name of the Taxtype,a Character Field of Max Length 150.">tax_type_name</a>
+<a name="l00015"></a>00015                 <span class="keywordflow">return</span> <span class="stringliteral">&quot;%s &quot;</span> % self.<a class="code" href="classonline__payment_1_1models_1_1Taxtype.html#ae9005c2d4f36d1029cd1c19636522ab2" title="ID of the Taxtype,integer,primary key of this table.">tax_type_id</a>
 <a name="l00016"></a>00016 
 <a name="l00017"></a>00017 <span class="comment">##This is used to create a BackOffice dummy table in the database,which containes customers&#39; records.</span>
 <a name="l00018"></a>00018 <span class="comment">##We used the dummy because we needed the API from another group,which was not ready</span>
@@ -102,7 +102,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00033"></a>00033         <span class="comment">##@param self: The object calling this method</span>
 <a name="l00034"></a>00034         <span class="comment">##@return string: The Customer&#39;s name</span>
 <a name="l00035"></a><a class="code" href="classonline__payment_1_1models_1_1BackOffice__dummy.html#ae252c58a3e99514611fa9cfc62f84777">00035</a>         <span class="keyword">def </span><a class="code" href="classonline__payment_1_1models_1_1BackOffice__dummy.html#ae252c58a3e99514611fa9cfc62f84777" title="Used to print the Customer name in place of the object.">__unicode__</a>(self):
-<a name="l00036"></a>00036                 <span class="keywordflow">return</span> <span class="stringliteral">&quot;%s &quot;</span> % self.<a class="code" href="classonline__payment_1_1models_1_1BackOffice__dummy.html#a439a8083b390ed6151178191731aec96" title="Name of the Customer,a Character Field of Max Length 50.">customer_name</a>
+<a name="l00036"></a>00036                 <span class="keywordflow">return</span> <span class="stringliteral">&quot;%s &quot;</span> % self.<a class="code" href="classonline__payment_1_1models_1_1BackOffice__dummy.html#a84a7add86cf1da0bea2ca908f3c8eb30" title="ID of the Customer,integer,primary key of this table.">customer_id</a>
 <a name="l00037"></a>00037         
 <a name="l00038"></a>00038 <span class="comment">##This is used to create an Accounts dummy table in the database,which containes customers&#39; accounts.</span>
 <a name="l00039"></a>00039 <span class="comment">##We used the dummy because we needed the API from another group,which was not ready</span>
@@ -158,12 +158,27 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00089"></a><a class="code" href="classonline__payment_1_1models_1_1Tax__transaction.html#a73843eb8d0b8680d17cafb502805da3a">00089</a>         amount_paid=models.FloatField()
 <a name="l00090"></a>00090         <span class="comment">##Assesment Year</span>
 <a name="l00091"></a><a class="code" href="classonline__payment_1_1models_1_1Tax__transaction.html#ad3512b1c80ae4552acf77869109dd643">00091</a>         asses_year=models.CharField(max_length=50)
+<a name="l00092"></a>00092 
+<a name="l00093"></a>00093 <span class="comment">##This is used to create a Service Tax table in the database,which containes history of service tax payed by customer.</span>
+<a name="l00094"></a><a class="code" href="classonline__payment_1_1models_1_1Service__Tax.html">00094</a> <span class="keyword">class </span><a class="code" href="classonline__payment_1_1models_1_1Service__Tax.html" title="This is used to create a Service Tax table in the database,which containes history of service tax pay...">Service_Tax</a>(models.Model):
+<a name="l00095"></a>00095         <span class="comment">##ID of the Customer,integer,foreign key to Backoffice dummy</span>
+<a name="l00096"></a><a class="code" href="classonline__payment_1_1models_1_1Service__Tax.html#a225a6a12521ef6823c79195e5ea7e465">00096</a>         customer_id=models.ForeignKey(BackOffice_dummy,to_field=<span class="stringliteral">&#39;customer_id&#39;</span>)
+<a name="l00097"></a>00097         <span class="comment">##Account Number of the Customer,foreign key to Accounts dummy</span>
+<a name="l00098"></a><a class="code" href="classonline__payment_1_1models_1_1Service__Tax.html#a5fe56ddf2f5e047c2e6a34e5d954a418">00098</a>         account_number=models.ForeignKey(Accounts_dummy,to_field=<span class="stringliteral">&#39;account_number&#39;</span>)
+<a name="l00099"></a>00099         <span class="comment">##Date of the Deduction</span>
+<a name="l00100"></a><a class="code" href="classonline__payment_1_1models_1_1Service__Tax.html#a669faa06b6c8c6983184b3e0525bb3a4">00100</a>         date=models.DateField(primary_key=<span class="keyword">True</span>)
+<a name="l00101"></a>00101         <span class="comment">##Used to print the Assesment Year in place of the object</span>
+<a name="l00102"></a>00102         <span class="comment">##@param self: The object calling this method</span>
+<a name="l00103"></a>00103         <span class="comment">##@return string: The Assesment year</span>
+<a name="l00104"></a><a class="code" href="classonline__payment_1_1models_1_1Service__Tax.html#af8b7279445ac2cac24dc0e788da5362e">00104</a>         <span class="keyword">def </span><a class="code" href="classonline__payment_1_1models_1_1Service__Tax.html#af8b7279445ac2cac24dc0e788da5362e" title="Used to print the Assesment Year in place of the object.">__unicode__</a>(self):
+<a name="l00105"></a>00105                 <span class="keywordflow">return</span> <span class="stringliteral">&quot;%s &quot;</span> % self.<a class="code" href="classonline__payment_1_1models_1_1Service__Tax.html#a669faa06b6c8c6983184b3e0525bb3a4" title="Date of the Deduction.">date</a>
+<a name="l00106"></a>00106 
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="models_8py.html">models.py</a>      </li>
-      <li class="footer">Generated on Fri Nov 18 2011 22:25:02 for Tax-Project by&#160;
+      <li class="footer">Generated on Wed Nov 23 2011 02:25:34 for Tax-Project by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </li>
     </ul>

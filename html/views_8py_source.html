@@ -71,157 +71,174 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00002"></a>00002 <span class="comment">##This module contains all the backend logic happening in our Web Application</span>
 <a name="l00003"></a>00003 <span class="keyword">from</span> django.http <span class="keyword">import</span> HttpResponse,HttpResponseRedirect
 <a name="l00004"></a>00004 <span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render_to_response
-<a name="l00005"></a>00005 <span class="keyword">from</span> online_payment.models <span class="keyword">import</span> Tax_transaction,BackOffice_dummy,Accounts_dummy,Online_Transaction_dummy,Taxtype
+<a name="l00005"></a>00005 <span class="keyword">from</span> online_payment.models <span class="keyword">import</span> Tax_transaction,BackOffice_dummy,Accounts_dummy,Online_Transaction_dummy,Taxtype,Service_Tax
 <a name="l00006"></a>00006 <span class="keyword">import</span> datetime
-<a name="l00007"></a>00007 
-<a name="l00008"></a>00008 <span class="comment">##This method/view is called on the starting page of our Application</span>
-<a name="l00009"></a>00009 <span class="comment">##@param request: This is the HTTP Request object,which is formed when we request for the starting page of our App.</span>
-<a name="l00010"></a>00010 <span class="comment">##@return response:An HTTP Response Object,containing the name of the template which is to be rendered,and its context,which contains all the local variables of this function</span>
-<a name="l00011"></a><a class="code" href="namespaceonline__payment_1_1views.html#a194f68fec9423b1f17916ef0c7df5999">00011</a> <span class="keyword">def </span><a class="code" href="namespaceonline__payment_1_1views.html#a194f68fec9423b1f17916ef0c7df5999" title="This method/view is called on the starting page of our Application.">onli</a>(request):
-<a name="l00012"></a>00012         <span class="comment">##Get all objects from the table Taxtype in a dictionary,and send this to the rendering template</span>
-<a name="l00013"></a>00013         tax_list = Taxtype.objects.all()
-<a name="l00014"></a>00014         <span class="keywordflow">return</span> render_to_response(<span class="stringliteral">&#39;base.html&#39;</span>,locals())
-<a name="l00015"></a>00015 
-<a name="l00016"></a>00016 <span class="comment">##This method/view is called when the customer enters his account number on the first page and requests for payment of a Tax Type.</span>
-<a name="l00017"></a>00017 <span class="comment">##@param request: This is the HTTP Request object,which is formed when we request for the starting page of our App.</span>
-<a name="l00018"></a>00018 <span class="comment">##@return response:An HTTP Response Object,containing the name of the template which is to be rendered,and its context,which contains all the local variables of this function</span>
-<a name="l00019"></a><a class="code" href="namespaceonline__payment_1_1views.html#a8ca32b55cd7fb486897a504feef5a230">00019</a> <span class="keyword">def </span><a class="code" href="namespaceonline__payment_1_1views.html#a8ca32b55cd7fb486897a504feef5a230" title="This method/view is called when the customer enters his account number on the first page and requests...">detail</a>(request):
-<a name="l00020"></a>00020         <span class="keywordflow">if</span> <span class="stringliteral">&#39;accno&#39;</span> <span class="keywordflow">and</span> <span class="stringliteral">&#39;type&#39;</span> <span class="keywordflow">in</span> request.GET <span class="keywordflow">and</span> request.GET[<span class="stringliteral">&#39;accno&#39;</span>]:
-<a name="l00021"></a>00021                 <span class="comment">##Getting the Account number from the request.GET dictionary</span>
-<a name="l00022"></a>00022                 q = request.GET[<span class="stringliteral">&#39;accno&#39;</span>]
-<a name="l00023"></a>00023                 <span class="comment">##Getting the Tax type from the request.GET dictionary</span>
-<a name="l00024"></a>00024                 ttype=request.GET[<span class="stringliteral">&#39;type&#39;</span>]
-<a name="l00025"></a>00025                 <span class="comment">##Getting the specific Tax type row corresponding to the tax type id.</span>
-<a name="l00026"></a>00026                 Type=Taxtype.objects.get(tax_type_id=ttype)
-<a name="l00027"></a>00027                 <span class="keywordflow">try</span>:
-<a name="l00028"></a>00028                         <span class="comment">##Getting the row from the Accounts dummy table with account number q</span>
-<a name="l00029"></a>00029                         custac = Accounts_dummy.objects.get(account_number=q)
-<a name="l00030"></a>00030                         <span class="comment">##Getting the row from the BackOffice dummy table with cust.customer id</span>
-<a name="l00031"></a>00031                         custinfo=BackOffice_dummy.objects.get(customer_id=custac.customer_id_id)
-<a name="l00032"></a>00032                         
+<a name="l00007"></a>00007 <span class="keyword">from</span> django.template <span class="keyword">import</span> RequestContext
+<a name="l00008"></a>00008 
+<a name="l00009"></a>00009 <span class="comment">##This method/view is called on the starting page of our Application</span>
+<a name="l00010"></a>00010 <span class="comment">##@param request: This is the HTTP Request object,which is formed when we request for the starting page of our App.</span>
+<a name="l00011"></a>00011 <span class="comment">##@return response:An HTTP Response Object,containing the name of the template which is to be rendered,and its context,which contains all the local variables of this function</span>
+<a name="l00012"></a><a class="code" href="namespaceonline__payment_1_1views.html#a194f68fec9423b1f17916ef0c7df5999">00012</a> <span class="keyword">def </span><a class="code" href="namespaceonline__payment_1_1views.html#a194f68fec9423b1f17916ef0c7df5999" title="This method/view is called on the starting page of our Application.">onli</a>(request):
+<a name="l00013"></a>00013         <span class="comment">##Get all objects from the table Taxtype in a dictionary,and send this to the rendering template</span>
+<a name="l00014"></a>00014         tax_list = Taxtype.objects.all()
+<a name="l00015"></a>00015         <span class="keywordflow">return</span> render_to_response(<span class="stringliteral">&#39;base.html&#39;</span>,locals())
+<a name="l00016"></a>00016 
+<a name="l00017"></a>00017 <span class="comment">##This method/view is called when the customer enters his account number on the first page and requests for payment of a Tax Type.</span>
+<a name="l00018"></a>00018 <span class="comment">##@param request: This is the HTTP Request object,which is formed when we request for the starting page of our App.</span>
+<a name="l00019"></a>00019 <span class="comment">##@return response:An HTTP Response Object,containing the name of the template which is to be rendered,and its context,which contains all the local variables of this function</span>
+<a name="l00020"></a><a class="code" href="namespaceonline__payment_1_1views.html#a8ca32b55cd7fb486897a504feef5a230">00020</a> <span class="keyword">def </span><a class="code" href="namespaceonline__payment_1_1views.html#a8ca32b55cd7fb486897a504feef5a230" title="This method/view is called when the customer enters his account number on the first page and requests...">detail</a>(request):
+<a name="l00021"></a>00021         <span class="keywordflow">if</span> <span class="stringliteral">&#39;accno&#39;</span> <span class="keywordflow">in</span> request.GET <span class="keywordflow">and</span> <span class="stringliteral">&#39;type&#39;</span> <span class="keywordflow">in</span> request.GET <span class="keywordflow">and</span> request.GET[<span class="stringliteral">&#39;accno&#39;</span>]:
+<a name="l00022"></a>00022                 <span class="comment">##Getting the Account number from the request.GET dictionary</span>
+<a name="l00023"></a>00023                 q = request.GET[<span class="stringliteral">&#39;accno&#39;</span>]
+<a name="l00024"></a>00024                 <span class="comment">##Getting the Tax type from the request.GET dictionary</span>
+<a name="l00025"></a>00025                 ttype=request.GET[<span class="stringliteral">&#39;type&#39;</span>]
+<a name="l00026"></a>00026                 <span class="comment">##Getting the specific Tax type row corresponding to the tax type id.</span>
+<a name="l00027"></a>00027                 Type=Taxtype.objects.get(tax_type_id=ttype)
+<a name="l00028"></a>00028                 <span class="keywordflow">try</span>:
+<a name="l00029"></a>00029                         <span class="comment">##Getting the row from the Accounts dummy table with account number q</span>
+<a name="l00030"></a>00030                         custac = Accounts_dummy.objects.get(account_number=q)
+<a name="l00031"></a>00031                         <span class="comment">##Getting the row from the BackOffice dummy table with cust.customer id</span>
+<a name="l00032"></a>00032                         custinfo=BackOffice_dummy.objects.get(customer_id=custac.customer_id_id)
 <a name="l00033"></a>00033                         <span class="keywordflow">if</span> custinfo.customer_age&gt;=60:
-<a name="l00034"></a>00034                                 custac.tax_exemption=<span class="keyword">True</span>;
-<a name="l00035"></a>00035                         <span class="keywordflow">else</span>:
-<a name="l00036"></a>00036                                 custac.tax_exemption=<span class="keyword">False</span>;
-<a name="l00037"></a>00037                         <span class="comment">##Logic for deducting Rs 100 from Customer&#39;s account every year</span>
-<a name="l00038"></a>00038                         now=datetime.datetime.now()
-<a name="l00039"></a>00039                         account_created_on=custac.date_account_created;
-<a name="l00040"></a>00040                         difference=((now-account_created_on).days)/365
-<a name="l00041"></a>00041                         service_tax=100
-<a name="l00042"></a>00042                         <span class="keywordflow">if</span> custac.service_tax_cut!=difference:
-<a name="l00043"></a>00043                                 custac.amount=custac.amount-service_tax;
-<a name="l00044"></a>00044                                 custac.save()
-<a name="l00045"></a>00045                                 custac.service_tax_cut=difference
-<a name="l00046"></a>00046                                 custac.save()
-<a name="l00047"></a>00047                                 
-<a name="l00048"></a>00048                 <span class="keywordflow">except</span>:
-<a name="l00049"></a>00049                         <span class="comment">##Saving the error so that it can be showed in the rendered HTML page</span>
-<a name="l00050"></a>00050                         error=<span class="stringliteral">&quot;Invalid Account Number.It does Not Exists.&quot;</span>
-<a name="l00051"></a>00051                         <span class="keywordflow">return</span> render_to_response(<span class="stringliteral">&#39;error.html&#39;</span>,locals())
-<a name="l00052"></a>00052                                         
-<a name="l00053"></a>00053                 <span class="keywordflow">return</span> render_to_response(<span class="stringliteral">&#39;ttype1.html&#39;</span>,locals())               
-<a name="l00054"></a>00054                 <span class="comment">#return render_to_response(&#39;ttype1.html&#39;,{&#39;custac&#39;:ac , &#39;custinfo&#39;: cust})</span>
-<a name="l00055"></a>00055         <span class="comment">#else:</span>
-<a name="l00056"></a>00056                 <span class="comment">#return HttpResponseRedirect(&#39;/onlinePayment/&#39;)</span>
-<a name="l00057"></a>00057 
-<a name="l00058"></a>00058 
-<a name="l00059"></a>00059 <span class="comment">##This method/view is called when the customer enters the amount of Tax he wants to pay,and enters a payment portal.</span>
-<a name="l00060"></a>00060 <span class="comment">##@param request: This is the HTTP Request object,which is formed when we request for the starting page of our App.</span>
-<a name="l00061"></a>00061 <span class="comment">##@return response:An HTTP Response Object,containing the name of the template which is to be rendered,and its context,which contains all the local variables of this function</span>
-<a name="l00062"></a><a class="code" href="namespaceonline__payment_1_1views.html#aa0381111970885e7a52d24b75d05c3be">00062</a> <span class="keyword">def </span><a class="code" href="namespaceonline__payment_1_1views.html#aa0381111970885e7a52d24b75d05c3be" title="This method/view is called when the customer enters the amount of Tax he wants to pay...">confirm_payment</a>(request):
-<a name="l00063"></a>00063         <span class="keywordflow">if</span> <span class="stringliteral">&#39;amount&#39;</span> <span class="keywordflow">in</span> request.GET <span class="keywordflow">and</span> request.GET[<span class="stringliteral">&#39;amount&#39;</span>]:
-<a name="l00064"></a>00064                 <span class="comment">##Getting the Amount from the request.GET dictionary</span>
-<a name="l00065"></a>00065                 a=request.GET[<span class="stringliteral">&#39;amount&#39;</span>]
-<a name="l00066"></a>00066                 <span class="comment">##Getting the tax type id from the request.GET dictionary</span>
-<a name="l00067"></a>00067                 ttype=request.GET[<span class="stringliteral">&#39;taxtype&#39;</span>]
-<a name="l00068"></a>00068                 <span class="comment">##Getting the Customer Name from the request.GET dictionary</span>
-<a name="l00069"></a>00069                 custname=request.GET[<span class="stringliteral">&#39;name&#39;</span>]
-<a name="l00070"></a>00070                 <span class="comment">##Getting the Customer ID from the request.GET dictionary</span>
-<a name="l00071"></a>00071                 custid=request.GET[<span class="stringliteral">&#39;custid&#39;</span>]
-<a name="l00072"></a>00072                 <span class="comment">##Getting the Account number from the request.GET dictionary</span>
-<a name="l00073"></a>00073                 accno=request.GET[<span class="stringliteral">&#39;accno&#39;</span>]
-<a name="l00074"></a>00074                 <span class="comment">##Getting the Assesment year from the request.GET dictionary</span>
-<a name="l00075"></a>00075                 assyear=request.GET[<span class="stringliteral">&#39;ayear&#39;</span>]
-<a name="l00076"></a>00076                 <span class="keywordflow">return</span> render_to_response(<span class="stringliteral">&#39;confirm.html&#39;</span>,locals())
-<a name="l00077"></a>00077         <span class="keywordflow">else</span>:
-<a name="l00078"></a>00078                 <span class="keywordflow">return</span> HttpResponse(<span class="stringliteral">&#39;Please enter Amount&#39;</span>)
-<a name="l00079"></a>00079         
-<a name="l00080"></a>00080 <span class="comment">##This method/view is called when the customer enters his PIN on the payment portal.</span>
-<a name="l00081"></a>00081 <span class="comment">##@param request: This is the HTTP Request object,which is formed when we request for the starting page of our App.</span>
-<a name="l00082"></a>00082 <span class="comment">##@return response:An HTTP Response Object,containing the name of the template which is to be rendered,and its context,which contains all the local variables of this function</span>
-<a name="l00083"></a><a class="code" href="namespaceonline__payment_1_1views.html#ad3df2cf0660516f3894d6b9ba69aa907">00083</a> <span class="keyword">def </span><a class="code" href="namespaceonline__payment_1_1views.html#ad3df2cf0660516f3894d6b9ba69aa907" title="This method/view is called when the customer enters his PIN on the payment portal.">onl_validatin</a>(request):
-<a name="l00084"></a>00084         <span class="keywordflow">if</span> <span class="stringliteral">&#39;amount&#39;</span> <span class="keywordflow">in</span> request.GET <span class="keywordflow">and</span> request.GET[<span class="stringliteral">&#39;amount&#39;</span>]:
-<a name="l00085"></a>00085                 cid=request.GET[<span class="stringliteral">&#39;id&#39;</span>]
-<a name="l00086"></a>00086                 ttid=request.GET[<span class="stringliteral">&#39;taxtype&#39;</span>]
-<a name="l00087"></a>00087                 a=request.GET[<span class="stringliteral">&#39;amount&#39;</span>]
-<a name="l00088"></a>00088                 custname=request.GET[<span class="stringliteral">&#39;name&#39;</span>]
-<a name="l00089"></a>00089                 accno=request.GET[<span class="stringliteral">&#39;accno&#39;</span>]
-<a name="l00090"></a>00090                 assyear=request.GET[<span class="stringliteral">&#39;ayear&#39;</span>]
-<a name="l00091"></a>00091                 amount=request.GET[<span class="stringliteral">&#39;amount&#39;</span>]
-<a name="l00092"></a>00092                 pin=request.GET[<span class="stringliteral">&#39;pin&#39;</span>]
-<a name="l00093"></a>00093                 custac = Accounts_dummy.objects.get(account_number=accno)
-<a name="l00094"></a>00094                 <span class="comment">#c=custac.</span>
-<a name="l00095"></a>00095                 <span class="comment">#s=int(custac)==int(pin)</span>
-<a name="l00096"></a>00096                 <span class="comment">#assert False</span>
-<a name="l00097"></a>00097                 now = datetime.datetime.now()
-<a name="l00098"></a>00098                 
-<a name="l00099"></a>00099                 <span class="keywordflow">if</span> int(custac.ATM_PIN)==int(pin):
-<a name="l00100"></a>00100                         <span class="comment">##Creating a new Online Transaction Object/Row pertaining to the tax transaction just made</span>
-<a name="l00101"></a>00101                         p=Online_Transaction_dummy.objects.create(account_number_id=custac.account_number,amount_paid=amount)
-<a name="l00102"></a>00102                         p.save()
-<a name="l00103"></a>00103                         <span class="comment">##Creating a new Tax transaction Object/Row pertaining to the tax transaction just made</span>
-<a name="l00104"></a>00104                         p1=Tax_transaction(customer_id_id=cid,account_number_id=accno,tax_type_id_id=ttid,transaction_id_id=p.transaction_id,date=now,amount_paid=amount,asses_year=assyear)
-<a name="l00105"></a>00105                         p1.save()
-<a name="l00106"></a>00106                         <span class="comment">##Deducting appropriate money from the Customer Account</span>
-<a name="l00107"></a>00107                         custac.amount=custac.amount-float(amount)
-<a name="l00108"></a>00108                         custac.save()
-<a name="l00109"></a>00109                         <span class="keywordflow">return</span> render_to_response(<span class="stringliteral">&#39;done.html&#39;</span>,locals())
-<a name="l00110"></a>00110                 <span class="keywordflow">else</span>:
-<a name="l00111"></a>00111                         <span class="comment">##Saving the error so that it can be showed in the rendered HTML page</span>
-<a name="l00112"></a>00112                         error=<span class="stringliteral">&quot;Invalid PIN Entered.Try Again&quot;</span>
+<a name="l00034"></a>00034                                 custac.tax_exemption=<span class="keyword">True</span>
+<a name="l00035"></a>00035                                 custac.save()
+<a name="l00036"></a>00036                                 error=<span class="stringliteral">&quot;You do not need to pay any Tax as you have filled 15H/15G form,and are &gt; 60 years of age&quot;</span>
+<a name="l00037"></a>00037                                 <span class="keywordflow">return</span> render_to_response(<span class="stringliteral">&#39;error.html&#39;</span>,locals())                                
+<a name="l00038"></a>00038                         <span class="keywordflow">else</span>:
+<a name="l00039"></a>00039                                 custac.tax_exemption=<span class="keyword">False</span>
+<a name="l00040"></a>00040                                 custac.save()
+<a name="l00041"></a>00041                         <span class="comment">##Logic for deducting Rs 100 from Customer&#39;s account every year</span>
+<a name="l00042"></a>00042                         now=datetime.datetime.now()
+<a name="l00043"></a>00043                         account_created_on=custac.date_account_created;
+<a name="l00044"></a>00044                         difference=((now.date()-account_created_on.date()).days)/365
+<a name="l00045"></a>00045                         service_tax=100
+<a name="l00046"></a>00046                         <span class="keywordflow">if</span> custac.service_tax_cut!=difference:
+<a name="l00047"></a>00047                                 custac.amount=custac.amount-service_tax
+<a name="l00048"></a>00048                                 s=Service_Tax(customer_id_id=custac.customer_id_id,account_number_id=custac.account_number,date=now)
+<a name="l00049"></a>00049                                 s.save()
+<a name="l00050"></a>00050                                 custac.save()
+<a name="l00051"></a>00051                                 custac.service_tax_cut=difference
+<a name="l00052"></a>00052                                 custac.save()
+<a name="l00053"></a>00053                                 
+<a name="l00054"></a>00054                 <span class="keywordflow">except</span>:
+<a name="l00055"></a>00055                         <span class="comment">##Saving the error so that it can be showed in the rendered HTML page</span>
+<a name="l00056"></a>00056                         error=<span class="stringliteral">&quot;Invalid Account Number.It does Not Exists.&quot;</span>
+<a name="l00057"></a>00057                         <span class="keywordflow">return</span> render_to_response(<span class="stringliteral">&#39;error.html&#39;</span>,locals())
+<a name="l00058"></a>00058                                         
+<a name="l00059"></a>00059                 <span class="keywordflow">return</span> render_to_response(<span class="stringliteral">&#39;ttype1.html&#39;</span>,locals(),context_instance=RequestContext(request))              
+<a name="l00060"></a>00060                 <span class="comment">#return render_to_response(&#39;ttype1.html&#39;,{&#39;custac&#39;:ac , &#39;custinfo&#39;: cust})</span>
+<a name="l00061"></a>00061         <span class="keywordflow">else</span>:
+<a name="l00062"></a>00062                 <span class="keywordflow">return</span> HttpResponseRedirect(<span class="stringliteral">&#39;/onlinePayment/&#39;</span>)
+<a name="l00063"></a>00063 
+<a name="l00064"></a>00064 
+<a name="l00065"></a>00065 <span class="comment">##This method/view is called when the customer enters the amount of Tax he wants to pay,and enters a payment portal.</span>
+<a name="l00066"></a>00066 <span class="comment">##@param request: This is the HTTP Request object,which is formed when we request for the starting page of our App.</span>
+<a name="l00067"></a>00067 <span class="comment">##@return response:An HTTP Response Object,containing the name of the template which is to be rendered,and its context,which contains all the local variables of this function</span>
+<a name="l00068"></a>00068 
+<a name="l00069"></a><a class="code" href="namespaceonline__payment_1_1views.html#aa0381111970885e7a52d24b75d05c3be">00069</a> <span class="keyword">def </span><a class="code" href="namespaceonline__payment_1_1views.html#aa0381111970885e7a52d24b75d05c3be" title="This method/view is called when the customer enters the amount of Tax he wants to pay...">confirm_payment</a>(request):
+<a name="l00070"></a>00070         <span class="keywordflow">if</span> <span class="stringliteral">&#39;amount&#39;</span> <span class="keywordflow">in</span> request.POST <span class="keywordflow">and</span> request.POST[<span class="stringliteral">&#39;amount&#39;</span>]:
+<a name="l00071"></a>00071                 <span class="comment">##Getting the Amount from the request.GET dictionary</span>
+<a name="l00072"></a>00072                 a=request.POST[<span class="stringliteral">&#39;amount&#39;</span>]
+<a name="l00073"></a>00073                 <span class="comment">##Getting the tax type id from the request.GET dictionary</span>
+<a name="l00074"></a>00074                 ttype=request.POST[<span class="stringliteral">&#39;taxtype&#39;</span>]
+<a name="l00075"></a>00075                 <span class="comment">##Getting the Customer Name from the request.GET dictionary</span>
+<a name="l00076"></a>00076                 custname=request.POST[<span class="stringliteral">&#39;name&#39;</span>]
+<a name="l00077"></a>00077                 <span class="comment">##Getting the Customer ID from the request.GET dictionary</span>
+<a name="l00078"></a>00078                 custid=request.POST[<span class="stringliteral">&#39;custid&#39;</span>]
+<a name="l00079"></a>00079                 <span class="comment">##Getting the Account number from the request.GET dictionary</span>
+<a name="l00080"></a>00080                 accno=request.POST[<span class="stringliteral">&#39;accno&#39;</span>]
+<a name="l00081"></a>00081                 <span class="comment">##Getting the Assesment year from the request.GET dictionary</span>
+<a name="l00082"></a>00082                 assyear=request.POST[<span class="stringliteral">&#39;ayear&#39;</span>]
+<a name="l00083"></a>00083                 <span class="keywordflow">try</span>:
+<a name="l00084"></a>00084                         account = Accounts_dummy.objects.get(account_number=accno)
+<a name="l00085"></a>00085                 <span class="keywordflow">except</span>:
+<a name="l00086"></a>00086                         error=<span class="stringliteral">&quot;Account number not in database&quot;</span>
+<a name="l00087"></a>00087                         <span class="keywordflow">return</span> render_to_response(<span class="stringliteral">&#39;error.html&#39;</span>,locals())
+<a name="l00088"></a>00088                 
+<a name="l00089"></a>00089                 <span class="keywordflow">if</span> account.amount&lt;float(a):
+<a name="l00090"></a>00090                         error=<span class="stringliteral">&quot;Too Low Balance In Your Amount.Please Refill it!!&quot;</span>
+<a name="l00091"></a>00091                         <span class="keywordflow">return</span> render_to_response(<span class="stringliteral">&#39;error.html&#39;</span>,locals())
+<a name="l00092"></a>00092                 <span class="keywordflow">return</span> render_to_response(<span class="stringliteral">&#39;confirm.html&#39;</span>,locals(),context_instance=RequestContext(request))
+<a name="l00093"></a>00093         <span class="keywordflow">else</span>:
+<a name="l00094"></a>00094                 <span class="keywordflow">return</span> HttpResponse(<span class="stringliteral">&#39;Please enter Amount&#39;</span>)
+<a name="l00095"></a>00095         
+<a name="l00096"></a>00096 <span class="comment">##This method/view is called when the customer enters his PIN on the payment portal.</span>
+<a name="l00097"></a>00097 <span class="comment">##@param request: This is the HTTP Request object,which is formed when we request for the starting page of our App.</span>
+<a name="l00098"></a>00098 <span class="comment">##@return response:An HTTP Response Object,containing the name of the template which is to be rendered,and its context,which contains all the local variables of this function</span>
+<a name="l00099"></a><a class="code" href="namespaceonline__payment_1_1views.html#ad3df2cf0660516f3894d6b9ba69aa907">00099</a> <span class="keyword">def </span><a class="code" href="namespaceonline__payment_1_1views.html#ad3df2cf0660516f3894d6b9ba69aa907" title="This method/view is called when the customer enters his PIN on the payment portal.">onl_validatin</a>(request):
+<a name="l00100"></a>00100         <span class="keywordflow">if</span> <span class="stringliteral">&#39;amount&#39;</span> <span class="keywordflow">in</span> request.POST <span class="keywordflow">and</span> request.POST[<span class="stringliteral">&#39;amount&#39;</span>]:
+<a name="l00101"></a>00101                 cid=request.POST[<span class="stringliteral">&#39;id&#39;</span>]
+<a name="l00102"></a>00102                 ttid=request.POST[<span class="stringliteral">&#39;taxtype&#39;</span>]
+<a name="l00103"></a>00103                 a=request.POST[<span class="stringliteral">&#39;amount&#39;</span>]
+<a name="l00104"></a>00104                 custname=request.POST[<span class="stringliteral">&#39;name&#39;</span>]
+<a name="l00105"></a>00105                 accno=request.POST[<span class="stringliteral">&#39;accno&#39;</span>]
+<a name="l00106"></a>00106                 assyear=request.POST[<span class="stringliteral">&#39;ayear&#39;</span>]
+<a name="l00107"></a>00107                 amount=request.POST[<span class="stringliteral">&#39;amount&#39;</span>]
+<a name="l00108"></a>00108                 pin=request.POST[<span class="stringliteral">&#39;pin&#39;</span>]
+<a name="l00109"></a>00109                 <span class="keywordflow">try</span>:
+<a name="l00110"></a>00110                         custac = Accounts_dummy.objects.get(account_number=accno)
+<a name="l00111"></a>00111                 <span class="keywordflow">except</span>:
+<a name="l00112"></a>00112                         error=<span class="stringliteral">&quot;Account number not in database&quot;</span>
 <a name="l00113"></a>00113                         <span class="keywordflow">return</span> render_to_response(<span class="stringliteral">&#39;error.html&#39;</span>,locals())
-<a name="l00114"></a>00114         <span class="keywordflow">else</span>:
-<a name="l00115"></a>00115                 <span class="keywordflow">return</span> HttpResponse(<span class="stringliteral">&#39;Please enter Amount&#39;</span>)
-<a name="l00116"></a>00116 
-<a name="l00117"></a>00117 
-<a name="l00118"></a>00118 <span class="comment">##This method/view is called when the customer wants to view all his Tax Transaction History</span>
-<a name="l00119"></a>00119 <span class="comment">##@param request: This is the HTTP Request object,which is formed when we request for the starting page of our App.</span>
-<a name="l00120"></a>00120 <span class="comment">##@return response:An HTTP Response Object,containing the name of the template which is to be rendered,and its context,which contains all the local variables of this function</span>
-<a name="l00121"></a><a class="code" href="namespaceonline__payment_1_1views.html#af552c0cf5ebc6445bddf243a609024ab">00121</a> <span class="keyword">def </span><a class="code" href="namespaceonline__payment_1_1views.html#af552c0cf5ebc6445bddf243a609024ab" title="This method/view is called when the customer wants to view all his Tax Transaction History...">show</a>(request):
-<a name="l00122"></a>00122                 <span class="keywordflow">if</span> <span class="stringliteral">&#39;accno&#39;</span> <span class="keywordflow">in</span> request.GET <span class="keywordflow">and</span> request.GET[<span class="stringliteral">&#39;accno&#39;</span>]:
-<a name="l00123"></a>00123                         <span class="comment">##Getting the account object corresponding to the given account number in the request.GET dictionary</span>
-<a name="l00124"></a>00124                         account=Accounts_dummy.objects.get(account_number=request.GET[<span class="stringliteral">&#39;accno&#39;</span>])
-<a name="l00125"></a>00125                         <span class="comment">##Getting the Tax transaction object corresponding to the given account number</span>
-<a name="l00126"></a>00126                         alltax=Tax_transaction.objects.filter(account_number=account.account_number)
-<a name="l00127"></a>00127                         <span class="keywordflow">return</span> render_to_response(<span class="stringliteral">&#39;show.html&#39;</span>,locals())
-<a name="l00128"></a>00128                 <span class="keywordflow">else</span>:
-<a name="l00129"></a>00129                         <span class="keywordflow">return</span> render_to_response(<span class="stringliteral">&#39;show.html&#39;</span>)
-<a name="l00130"></a>00130                 
-<a name="l00131"></a>00131 
+<a name="l00114"></a>00114                 <span class="comment">#c=custac.</span>
+<a name="l00115"></a>00115                 <span class="comment">#s=int(custac)==int(pin)</span>
+<a name="l00116"></a>00116                 <span class="comment">#assert False</span>
+<a name="l00117"></a>00117                 now = datetime.datetime.now()
+<a name="l00118"></a>00118                 
+<a name="l00119"></a>00119                 <span class="keywordflow">if</span> int(custac.ATM_PIN)==int(pin):
+<a name="l00120"></a>00120                         <span class="comment">##Creating a new Online Transaction Object/Row pertaining to the tax transaction just made</span>
+<a name="l00121"></a>00121                         p=Online_Transaction_dummy.objects.create(account_number_id=custac.account_number,amount_paid=amount)
+<a name="l00122"></a>00122                         p.save()
+<a name="l00123"></a>00123                         <span class="comment">##Creating a new Tax transaction Object/Row pertaining to the tax transaction just made</span>
+<a name="l00124"></a>00124                         p1=Tax_transaction(customer_id_id=cid,account_number_id=accno,tax_type_id_id=ttid,transaction_id_id=p.transaction_id,date=now,amount_paid=amount,asses_year=assyear)
+<a name="l00125"></a>00125                         p1.save()
+<a name="l00126"></a>00126                         <span class="comment">##Deducting appropriate money from the Customer Account</span>
+<a name="l00127"></a>00127                         custac.amount=custac.amount-float(amount)
+<a name="l00128"></a>00128                         custac.save()
+<a name="l00129"></a>00129                         <span class="keywordflow">return</span> render_to_response(<span class="stringliteral">&#39;done.html&#39;</span>,locals())
+<a name="l00130"></a>00130                 <span class="keywordflow">else</span>:
+<a name="l00131"></a>00131                         <span class="comment">##Saving the error so that it can be showed in the rendered HTML page</span>
 <a name="l00132"></a>00132 
-<a name="l00133"></a>00133 
-<a name="l00134"></a>00134 
-<a name="l00135"></a>00135 
-<a name="l00136"></a>00136 
+<a name="l00133"></a>00133                         error=<span class="stringliteral">&quot;Invalid PIN Entered.Try Again&quot;</span>
+<a name="l00134"></a>00134                         <span class="keywordflow">return</span> render_to_response(<span class="stringliteral">&#39;error.html&#39;</span>,locals())
+<a name="l00135"></a>00135         <span class="keywordflow">else</span>:
+<a name="l00136"></a>00136                 <span class="keywordflow">return</span> HttpResponse(<span class="stringliteral">&#39;Please enter Amount&#39;</span>)
 <a name="l00137"></a>00137 
 <a name="l00138"></a>00138 
-<a name="l00139"></a>00139 
-<a name="l00140"></a>00140 
-<a name="l00141"></a>00141 
-<a name="l00142"></a>00142 
-<a name="l00143"></a>00143 
-<a name="l00144"></a>00144 
-<a name="l00145"></a>00145 
-<a name="l00146"></a>00146 
-<a name="l00147"></a>00147 
-<a name="l00148"></a>00148 
-<a name="l00149"></a>00149         
+<a name="l00139"></a>00139 <span class="comment">##This method/view is called when the customer wants to view all his Tax Transaction History</span>
+<a name="l00140"></a>00140 <span class="comment">##@param request: This is the HTTP Request object,which is formed when we request for the starting page of our App.</span>
+<a name="l00141"></a>00141 <span class="comment">##@return response:An HTTP Response Object,containing the name of the template which is to be rendered,and its context,which contains all the local variables of this function</span>
+<a name="l00142"></a><a class="code" href="namespaceonline__payment_1_1views.html#af552c0cf5ebc6445bddf243a609024ab">00142</a> <span class="keyword">def </span><a class="code" href="namespaceonline__payment_1_1views.html#af552c0cf5ebc6445bddf243a609024ab" title="This method/view is called when the customer wants to view all his Tax Transaction History...">show</a>(request):
+<a name="l00143"></a>00143                 <span class="keywordflow">if</span> <span class="stringliteral">&#39;accno&#39;</span> <span class="keywordflow">in</span> request.GET <span class="keywordflow">and</span> request.GET[<span class="stringliteral">&#39;accno&#39;</span>]:
+<a name="l00144"></a>00144                         <span class="comment">##Getting the account object corresponding to the given account number in the request.GET dictionary</span>
+<a name="l00145"></a>00145                         <span class="keywordflow">try</span>:
+<a name="l00146"></a>00146                                 account=Accounts_dummy.objects.get(account_number=request.GET[<span class="stringliteral">&#39;accno&#39;</span>])
+<a name="l00147"></a>00147                         <span class="comment">##Getting the Tax transaction object corresponding to the given account number</span>
+<a name="l00148"></a>00148                                 alltax=Tax_transaction.objects.filter(account_number=account.account_number)
+<a name="l00149"></a>00149                         <span class="keywordflow">except</span>:
+<a name="l00150"></a>00150                                 error=<span class="stringliteral">&quot;Invalid Account Number.It Does not exists.&quot;</span>
+<a name="l00151"></a>00151                                 <span class="keywordflow">return</span> render_to_response(<span class="stringliteral">&#39;error.html&#39;</span>,locals())
+<a name="l00152"></a>00152                         <span class="keywordflow">return</span> render_to_response(<span class="stringliteral">&#39;show.html&#39;</span>,locals())
+<a name="l00153"></a>00153                 <span class="keywordflow">else</span>:
+<a name="l00154"></a>00154                         <span class="keywordflow">return</span> render_to_response(<span class="stringliteral">&#39;show.html&#39;</span>)
+<a name="l00155"></a>00155                 
+<a name="l00156"></a>00156 
+<a name="l00157"></a>00157 
+<a name="l00158"></a>00158 
+<a name="l00159"></a>00159 
+<a name="l00160"></a>00160 
+<a name="l00161"></a>00161 
+<a name="l00162"></a>00162 
+<a name="l00163"></a>00163 
+<a name="l00164"></a>00164 
+<a name="l00165"></a>00165 
+<a name="l00166"></a>00166         
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="views_8py.html">views.py</a>      </li>
-      <li class="footer">Generated on Fri Nov 18 2011 22:25:02 for Tax-Project by&#160;
+      <li class="footer">Generated on Wed Nov 23 2011 02:25:34 for Tax-Project by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </li>
     </ul>

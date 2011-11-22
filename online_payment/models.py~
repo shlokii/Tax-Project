@@ -12,7 +12,7 @@ class Taxtype(models.Model):
 	##@param self: The object calling this method
 	##@return string: The taxtype name
 	def __unicode__(self):
-		return "%s " % self.tax_type_name
+		return "%s " % self.tax_type_id
 
 ##This is used to create a BackOffice dummy table in the database,which containes customers' records.
 ##We used the dummy because we needed the API from another group,which was not ready
@@ -33,7 +33,7 @@ class BackOffice_dummy(models.Model):
 	##@param self: The object calling this method
 	##@return string: The Customer's name
 	def __unicode__(self):
-		return "%s " % self.customer_name
+		return "%s " % self.customer_id
 	
 ##This is used to create an Accounts dummy table in the database,which containes customers' accounts.
 ##We used the dummy because we needed the API from another group,which was not ready
@@ -89,3 +89,18 @@ class Tax_transaction(models.Model):
 	amount_paid=models.FloatField()
 	##Assesment Year
 	asses_year=models.CharField(max_length=50)
+
+##This is used to create a Service Tax table in the database,which containes history of service tax payed by customer.
+class Service_Tax(models.Model):
+	##ID of the Customer,integer,foreign key to Backoffice dummy
+	customer_id=models.ForeignKey(BackOffice_dummy,to_field='customer_id')
+	##Account Number of the Customer,foreign key to Accounts dummy
+	account_number=models.ForeignKey(Accounts_dummy,to_field='account_number')
+	##Date of the Deduction
+	date=models.DateField(primary_key=True)
+	##Used to print the Assesment Year in place of the object
+	##@param self: The object calling this method
+	##@return string: The Assesment year
+	def __unicode__(self):
+		return "%s " % self.asses_year
+

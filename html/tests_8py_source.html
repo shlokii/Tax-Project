@@ -73,22 +73,119 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00004"></a>00004 <span class="stringliteral"></span>
 <a name="l00005"></a>00005 <span class="stringliteral">Replace this with more appropriate tests for your application.</span>
 <a name="l00006"></a>00006 <span class="stringliteral">&quot;&quot;&quot;</span>
-<a name="l00007"></a>00007 
-<a name="l00008"></a>00008 <span class="keyword">from</span> django.test <span class="keyword">import</span> TestCase
-<a name="l00009"></a>00009 
-<a name="l00010"></a>00010 
-<a name="l00011"></a><a class="code" href="classonline__payment_1_1tests_1_1SimpleTest.html">00011</a> <span class="keyword">class </span><a class="code" href="classonline__payment_1_1tests_1_1SimpleTest.html">SimpleTest</a>(TestCase):
-<a name="l00012"></a><a class="code" href="classonline__payment_1_1tests_1_1SimpleTest.html#a62dba1f7791e3c547207cd4926c091fc">00012</a>     <span class="keyword">def </span><a class="code" href="classonline__payment_1_1tests_1_1SimpleTest.html#a62dba1f7791e3c547207cd4926c091fc">test_basic_addition</a>(self):
-<a name="l00013"></a>00013         <span class="stringliteral">&quot;&quot;&quot;</span>
-<a name="l00014"></a>00014 <span class="stringliteral">        Tests that 1 + 1 always equals 2.</span>
-<a name="l00015"></a>00015 <span class="stringliteral">        &quot;&quot;&quot;</span>
-<a name="l00016"></a>00016         self.assertEqual(1 + 1, 2)
+<a name="l00007"></a>00007 <span class="keyword">from</span> datetime <span class="keyword">import</span> datetime
+<a name="l00008"></a>00008 <span class="keyword">from</span> django.test <span class="keyword">import</span> Client
+<a name="l00009"></a>00009 <span class="keyword">from</span> django.test <span class="keyword">import</span> TestCase
+<a name="l00010"></a>00010 <span class="keyword">from</span> online_payment.models <span class="keyword">import</span> Taxtype, BackOffice_dummy, Accounts_dummy, Online_Transaction_dummy, Tax_transaction
+<a name="l00011"></a>00011 
+<a name="l00012"></a>00012 
+<a name="l00013"></a>00013 
+<a name="l00014"></a><a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html">00014</a> <span class="keyword">class </span><a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html">PrintTransaction</a>(TestCase):
+<a name="l00015"></a>00015   
+<a name="l00016"></a><a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html#a438d1352906f48f2b868c25ed483df9b">00016</a>   <span class="keyword">def </span><a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html#a7d5f8a1bb2d4391faf22ff5395d07a35">setUp</a>(self):
+<a name="l00017"></a>00017     self.<a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html#abaf12ee70c9bc91daa605eb836c623b1">customer</a>= BackOffice_dummy.objects.create(customer_id=1123,customer_name=<span class="stringliteral">&quot;manu&quot;</span>,customer_age=13,cust_street=<span class="stringliteral">&quot;asdfasd&quot;</span>,cust_city=<span class="stringliteral">&quot;hyderabad&quot;</span>,cust_state=<span class="stringliteral">&quot;AP&quot;</span>)
+<a name="l00018"></a>00018     self.<a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html#a7705995c6071c0c3cd57d159bd6ebd97">account</a>=Accounts_dummy.objects.create(account_number=1000,customer_id_id=1123,ATM_PIN=123,amount=100000,tax_exemption=<span class="keyword">True</span>,date_account_created=datetime.now(),service_tax_cut=100)
+<a name="l00019"></a>00019     self.<a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html#aa2588a59a0026a6fa6ce01f5a9c8e93a">tax_type</a>=Taxtype.objects.create(tax_type_id=1,tax_type_name=<span class="stringliteral">&#39;FBT&#39;</span>)
+<a name="l00020"></a>00020     self.<a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html#ab6fc279b9a214a8c20c891df0ee7cf7a">tax_type1</a>=Taxtype.objects.create(tax_type_id=2,tax_type_name=<span class="stringliteral">&#39;XYZ&#39;</span>)
+<a name="l00021"></a>00021     self.<a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html#a438d1352906f48f2b868c25ed483df9b">tax_type2</a>=Taxtype.objects.create(tax_type_id=3,tax_type_name=<span class="stringliteral">&#39;ABC&#39;</span>)
+<a name="l00022"></a>00022 
+<a name="l00023"></a><a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html#a5958d827df9fd7b061f09c2fab4457a8">00023</a>   <span class="keyword">def </span><a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html#a5958d827df9fd7b061f09c2fab4457a8">test_count</a>(self):
+<a name="l00024"></a>00024     count1 = Taxtype.objects.all().count()
+<a name="l00025"></a>00025     self.assertEqual(count1,3)
+<a name="l00026"></a>00026     
+<a name="l00027"></a>00027     
+<a name="l00028"></a>00028     
+<a name="l00029"></a><a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html#ae89f27f7cbb669db91aecd1b611d2570">00029</a>   <span class="keyword">def </span><a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html#ae89f27f7cbb669db91aecd1b611d2570">test_onli</a>(self):
+<a name="l00030"></a>00030     c=Client()
+<a name="l00031"></a>00031     response = c.get(<span class="stringliteral">&#39;/onlinePayment/&#39;</span>)
+<a name="l00032"></a>00032     self.assertEqual(response.status_code,200)
+<a name="l00033"></a>00033     
+<a name="l00034"></a><a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html#a7278d34679ef9b0f96d72d584f0fa987">00034</a>   <span class="keyword">def </span><a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html#a7278d34679ef9b0f96d72d584f0fa987">test_detail1</a>(self):
+<a name="l00035"></a>00035     c=Client()
+<a name="l00036"></a>00036     response = c.get(<span class="stringliteral">&#39;/homePage/&#39;</span>,{<span class="stringliteral">&#39;type&#39;</span>:1 ,<span class="stringliteral">&#39;accno&#39;</span>:1000})
+<a name="l00037"></a>00037     self.assertEqual(response.status_code,200)
+<a name="l00038"></a>00038    
+<a name="l00039"></a><a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html#af353178490ae0f56e5d9a3f30d2ce390">00039</a>   <span class="keyword">def </span><a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html#af353178490ae0f56e5d9a3f30d2ce390">test_detail2</a>(self):
+<a name="l00040"></a>00040     c=Client()
+<a name="l00041"></a>00041     response = c.get(<span class="stringliteral">&#39;/homePage/&#39;</span>,{<span class="stringliteral">&#39;accno&#39;</span>:1000})
+<a name="l00042"></a>00042     self.assertEqual(response.status_code,302)
+<a name="l00043"></a>00043   
+<a name="l00044"></a><a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html#ab648742cf84f4e4cc1544b0eff32ca1a">00044</a>   <span class="keyword">def </span><a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html#ab648742cf84f4e4cc1544b0eff32ca1a">test_detail2a</a>(self):
+<a name="l00045"></a>00045     c=Client()
+<a name="l00046"></a>00046     response = c.get(<span class="stringliteral">&#39;/homePage/&#39;</span>,{<span class="stringliteral">&#39;type&#39;</span>:1})
+<a name="l00047"></a>00047     self.assertEqual(response.status_code,302)
+<a name="l00048"></a>00048     
+<a name="l00049"></a><a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html#aa6e4fff76b21f19472a544ed7ca85d83">00049</a>   <span class="keyword">def </span><a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html#aa6e4fff76b21f19472a544ed7ca85d83">test_detail4</a>(self):
+<a name="l00050"></a>00050     c=Client()
+<a name="l00051"></a>00051     response = c.get(<span class="stringliteral">&#39;/homePage/&#39;</span>,{<span class="stringliteral">&#39;type&#39;</span>:1 ,<span class="stringliteral">&#39;accno&#39;</span>:1000})
+<a name="l00052"></a>00052     self.assertEqual(response.status_code,200)
+<a name="l00053"></a>00053     account_number_referred = response.context[<span class="stringliteral">&#39;custac&#39;</span>]
+<a name="l00054"></a>00054     self.assertEqual(account_number_referred.customer_id_id,1123)
+<a name="l00055"></a>00055     
+<a name="l00056"></a><a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html#adcb714de319b7a93dae02c8569d13642">00056</a>   <span class="keyword">def </span><a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html#adcb714de319b7a93dae02c8569d13642">test_confirm_payment</a>(self):
+<a name="l00057"></a>00057     c=Client()
+<a name="l00058"></a>00058     response = c.post(<span class="stringliteral">&#39;/homePage2/&#39;</span>,{<span class="stringliteral">&#39;custid&#39;</span>: 1123,<span class="stringliteral">&#39;name&#39;</span>:<span class="stringliteral">&quot;manu&quot;</span> ,<span class="stringliteral">&#39;street&#39;</span>:<span class="stringliteral">&quot;asdfasd&quot;</span>,<span class="stringliteral">&#39;city&#39;</span>:<span class="stringliteral">&quot;hyderabad&quot;</span>,<span class="stringliteral">&#39;state&#39;</span>:<span class="stringliteral">&quot;AP&quot;</span>,<span class="stringliteral">&#39;age&#39;</span>:13,<span class="stringliteral">&#39;accno&#39;</span>: 123,<span class="stringliteral">&#39;taxtype&#39;</span>:1,<span class="stringliteral">&#39;ayear&#39;</span>:2012,<span class="stringliteral">&#39;amount&#39;</span>:1000})
+<a name="l00059"></a>00059    <span class="comment">## print type(response)</span>
+<a name="l00060"></a>00060     self.assertEqual(response.status_code,200)
+<a name="l00061"></a>00061   
+<a name="l00062"></a><a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html#aa23fcf4c078bf397668a5ba726b06611">00062</a>   <span class="keyword">def </span><a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html#aa23fcf4c078bf397668a5ba726b06611">test_confirm_payment1</a>(self):
+<a name="l00063"></a>00063     c=Client()
+<a name="l00064"></a>00064     response = c.post(<span class="stringliteral">&#39;/homePage2/&#39;</span>,{<span class="stringliteral">&#39;custid&#39;</span>: 1123,<span class="stringliteral">&#39;name&#39;</span>:<span class="stringliteral">&quot;manu&quot;</span> ,<span class="stringliteral">&#39;street&#39;</span>:<span class="stringliteral">&quot;asdfasd&quot;</span>,<span class="stringliteral">&#39;city&#39;</span>:<span class="stringliteral">&quot;hyderabad&quot;</span>,<span class="stringliteral">&#39;state&#39;</span>:<span class="stringliteral">&quot;AP&quot;</span>,<span class="stringliteral">&#39;age&#39;</span>:13,<span class="stringliteral">&#39;accno&#39;</span>: 1000,<span class="stringliteral">&#39;taxtype&#39;</span>:1,<span class="stringliteral">&#39;ayear&#39;</span>:2012,<span class="stringliteral">&#39;amount&#39;</span>:1000})
+<a name="l00065"></a>00065    <span class="comment">## print type(response)</span>
+<a name="l00066"></a>00066     self.assertEqual(response.status_code,200)
+<a name="l00067"></a>00067   
+<a name="l00068"></a><a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html#a4f888b94dcf90f8ecf3b3ce2d31d28f7">00068</a>   <span class="keyword">def </span><a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html#a4f888b94dcf90f8ecf3b3ce2d31d28f7">test_onl_validatin</a>(self):
+<a name="l00069"></a>00069     c=Client()
+<a name="l00070"></a>00070     response = c.post(<span class="stringliteral">&#39;/homePage3/&#39;</span>,{<span class="stringliteral">&#39;id&#39;</span>: 1123,<span class="stringliteral">&#39;name&#39;</span>:<span class="stringliteral">&quot;manu&quot;</span> ,<span class="stringliteral">&#39;street&#39;</span>:<span class="stringliteral">&quot;asdfasd&quot;</span>,<span class="stringliteral">&#39;city&#39;</span>:<span class="stringliteral">&quot;hyderabad&quot;</span>,<span class="stringliteral">&#39;state&#39;</span>:<span class="stringliteral">&quot;AP&quot;</span>,<span class="stringliteral">&#39;age&#39;</span>:13,<span class="stringliteral">&#39;accno&#39;</span>: 1000,<span class="stringliteral">&#39;taxtype&#39;</span>:1,<span class="stringliteral">&#39;ayear&#39;</span>:2012,<span class="stringliteral">&#39;amount&#39;</span>:1000 ,<span class="stringliteral">&#39;pin&#39;</span>:1234})
+<a name="l00071"></a>00071     self.assertNotEqual(response.status_code,302)
+<a name="l00072"></a>00072     
+<a name="l00073"></a><a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html#ae918329de094cc560143710f5071a264">00073</a>   <span class="keyword">def </span><a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html#ae918329de094cc560143710f5071a264">test_onl_validatin2</a>(self):
+<a name="l00074"></a>00074     c=Client()
+<a name="l00075"></a>00075     response = c.post(<span class="stringliteral">&#39;/homePage3/&#39;</span>,{<span class="stringliteral">&#39;id&#39;</span>: 1123,<span class="stringliteral">&#39;name&#39;</span>:<span class="stringliteral">&quot;manu&quot;</span> ,<span class="stringliteral">&#39;street&#39;</span>:<span class="stringliteral">&quot;asdfasd&quot;</span>,<span class="stringliteral">&#39;city&#39;</span>:<span class="stringliteral">&quot;hyderabad&quot;</span>,<span class="stringliteral">&#39;state&#39;</span>:<span class="stringliteral">&quot;AP&quot;</span>,<span class="stringliteral">&#39;age&#39;</span>:13,<span class="stringliteral">&#39;accno&#39;</span>: 1000,<span class="stringliteral">&#39;taxtype&#39;</span>:1,<span class="stringliteral">&#39;ayear&#39;</span>:2012,<span class="stringliteral">&#39;amount&#39;</span>:1000 ,<span class="stringliteral">&#39;pin&#39;</span>:123})
+<a name="l00076"></a>00076     self.assertEqual(response.status_code,200)
+<a name="l00077"></a>00077   
+<a name="l00078"></a>00078   
+<a name="l00079"></a><a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html#a206a2223aa850e6ae9d89916f0b45747">00079</a>   <span class="keyword">def </span><a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html#a206a2223aa850e6ae9d89916f0b45747">test_show</a>(self):
+<a name="l00080"></a>00080     c=Client()
+<a name="l00081"></a>00081     response= c.get(<span class="stringliteral">&#39;/showtaxes/&#39;</span>,{<span class="stringliteral">&#39;accno&#39;</span> : 121212})
+<a name="l00082"></a>00082     self.assertEqual(response.status_code,200)
+<a name="l00083"></a>00083   
+<a name="l00084"></a><a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html#afd623294ee14bac1df54a92e4293f524">00084</a>   <span class="keyword">def </span><a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html#afd623294ee14bac1df54a92e4293f524">test_tax_transantion</a>(self):
+<a name="l00085"></a>00085     c=Client()
+<a name="l00086"></a>00086     <span class="keywordflow">try</span>:
+<a name="l00087"></a>00087       response=c.post(<span class="stringliteral">&#39;/homePage3/&#39;</span>,{<span class="stringliteral">&#39;id&#39;</span>: 1123,<span class="stringliteral">&#39;name&#39;</span>:<span class="stringliteral">&quot;manu&quot;</span> ,<span class="stringliteral">&#39;street&#39;</span>:<span class="stringliteral">&quot;asdfasd&quot;</span>,<span class="stringliteral">&#39;city&#39;</span>:<span class="stringliteral">&quot;hyderabad&quot;</span>,<span class="stringliteral">&#39;state&#39;</span>:<span class="stringliteral">&quot;AP&quot;</span>,<span class="stringliteral">&#39;age&#39;</span>:13,<span class="stringliteral">&#39;accno&#39;</span>: 1000,<span class="stringliteral">&#39;taxtype&#39;</span>:1,<span class="stringliteral">&#39;ayear&#39;</span>:2012,<span class="stringliteral">&#39;amount&#39;</span>:100 ,<span class="stringliteral">&#39;pin&#39;</span>:123})
+<a name="l00088"></a>00088       count = Tax_transaction.objects.get(account_number = 1000)
+<a name="l00089"></a>00089     <span class="keywordflow">except</span>:
+<a name="l00090"></a>00090       self.assertEqual(2,1)
+<a name="l00091"></a>00091   
+<a name="l00092"></a><a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html#afd623294ee14bac1df54a92e4293f524">00092</a>   <span class="keyword">def </span><a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html#afd623294ee14bac1df54a92e4293f524">test_tax_transantion</a>(self):
+<a name="l00093"></a>00093     c=Client()
+<a name="l00094"></a>00094     <span class="keywordflow">try</span>:
+<a name="l00095"></a>00095       response=c.post(<span class="stringliteral">&#39;/homePage3/&#39;</span>,{<span class="stringliteral">&#39;id&#39;</span>: 1123,<span class="stringliteral">&#39;name&#39;</span>:<span class="stringliteral">&quot;manu&quot;</span> ,<span class="stringliteral">&#39;street&#39;</span>:<span class="stringliteral">&quot;asdfasd&quot;</span>,<span class="stringliteral">&#39;city&#39;</span>:<span class="stringliteral">&quot;hyderabad&quot;</span>,<span class="stringliteral">&#39;state&#39;</span>:<span class="stringliteral">&quot;AP&quot;</span>,<span class="stringliteral">&#39;age&#39;</span>:13,<span class="stringliteral">&#39;accno&#39;</span>: 100,<span class="stringliteral">&#39;taxtype&#39;</span>:1,<span class="stringliteral">&#39;ayear&#39;</span>:2012,<span class="stringliteral">&#39;amount&#39;</span>:100 ,<span class="stringliteral">&#39;pin&#39;</span>:123})
+<a name="l00096"></a>00096       count = Tax_transaction.objects.get(account_number = 100)
+<a name="l00097"></a>00097     <span class="keywordflow">except</span>:
+<a name="l00098"></a>00098       self.assertEqual(1,1)
+<a name="l00099"></a>00099   
+<a name="l00100"></a><a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html#a23ed6efbb2045d4134a7d995d0383216">00100</a>   <span class="keyword">def </span><a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html#a23ed6efbb2045d4134a7d995d0383216">test_amount_insufficient</a>(self):
+<a name="l00101"></a>00101     c=Client()
+<a name="l00102"></a>00102     response=c.post(<span class="stringliteral">&#39;/homePage3/&#39;</span>,{<span class="stringliteral">&#39;id&#39;</span>: 1123,<span class="stringliteral">&#39;name&#39;</span>:<span class="stringliteral">&quot;manu&quot;</span> ,<span class="stringliteral">&#39;street&#39;</span>:<span class="stringliteral">&quot;asdfasd&quot;</span>,<span class="stringliteral">&#39;city&#39;</span>:<span class="stringliteral">&quot;hyderabad&quot;</span>,<span class="stringliteral">&#39;state&#39;</span>:<span class="stringliteral">&quot;AP&quot;</span>,<span class="stringliteral">&#39;age&#39;</span>:13,<span class="stringliteral">&#39;accno&#39;</span>: 1000,<span class="stringliteral">&#39;taxtype&#39;</span>:1,<span class="stringliteral">&#39;ayear&#39;</span>:2012,<span class="stringliteral">&#39;amount&#39;</span>:1000000000 ,<span class="stringliteral">&#39;pin&#39;</span>:123})
+<a name="l00103"></a>00103     self.assertEqual(response.status_code,200)
+<a name="l00104"></a>00104   
+<a name="l00105"></a><a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html#ae7c34a44e6a9a803f5c5aee3360397e9">00105</a>   <span class="keyword">def </span><a class="code" href="classonline__payment_1_1tests_1_1PrintTransaction.html#ae7c34a44e6a9a803f5c5aee3360397e9">test_amount_insufficient1</a>(self):
+<a name="l00106"></a>00106     c=Client()
+<a name="l00107"></a>00107     response=c.post(<span class="stringliteral">&#39;/homePage3/&#39;</span>,{<span class="stringliteral">&#39;id&#39;</span>: 1123,<span class="stringliteral">&#39;name&#39;</span>:<span class="stringliteral">&quot;manu&quot;</span> ,<span class="stringliteral">&#39;street&#39;</span>:<span class="stringliteral">&quot;asdfasd&quot;</span>,<span class="stringliteral">&#39;city&#39;</span>:<span class="stringliteral">&quot;hyderabad&quot;</span>,<span class="stringliteral">&#39;state&#39;</span>:<span class="stringliteral">&quot;AP&quot;</span>,<span class="stringliteral">&#39;age&#39;</span>:13,<span class="stringliteral">&#39;accno&#39;</span>: 1000,<span class="stringliteral">&#39;taxtype&#39;</span>:1,<span class="stringliteral">&#39;ayear&#39;</span>:2012,<span class="stringliteral">&#39;amount&#39;</span>:50000 ,<span class="stringliteral">&#39;pin&#39;</span>:123})
+<a name="l00108"></a>00108     count = Accounts_dummy.objects.get(account_number = 1000).amount 
+<a name="l00109"></a>00109     self.assertEqual(count,50000)
+<a name="l00110"></a>00110     
+<a name="l00111"></a>00111     
+<a name="l00112"></a>00112     
+<a name="l00113"></a>00113     
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="tests_8py.html">tests.py</a>      </li>
-      <li class="footer">Generated on Fri Nov 18 2011 22:25:02 for Tax-Project by&#160;
+      <li class="footer">Generated on Wed Nov 23 2011 02:25:34 for Tax-Project by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </li>
     </ul>

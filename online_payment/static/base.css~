@@ -1,0 +1,71 @@
+body
+{
+background-color:#d0e4fe;
+}
+h1
+{color:rgb(0,0,255);
+}
+a:link,a:visited
+{display:block;
+font-weight-bold;
+color:#FFFFFF;
+background-color:rgb(0,0,255);
+width:120px;
+text-align:center;
+padding:4px;
+text-decoration:none;
+}
+a:hover,a:active
+{background-color:rgb(0,0,125);
+}
+#shwtax
+{
+font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+width:100%;
+border-collapse:collapse;
+}
+#shwtax td, #shwtax th 
+{
+font-size:1em;
+border:1px solid #98bf21;
+padding:3px 7px 2px 7px;
+}
+#shwtax th 
+{
+font-size:1.1em;
+text-align:left;
+padding-top:5px;
+padding-bottom:4px;
+background-color:rgb(0,0,255);
+color:#ffffff;
+}
+#shwtax tr.alt td 
+{
+color:#000000;
+background-color:#EAF2D3;
+}
+
+
+form
+{
+  width: 800px;
+  color: #3E4A49;
+  background-color:rgb(255,255,255);
+  padding: 20px;
+  border: 2px solid #4899BE;
+  font-family: "Trebuchet MS", Arial, Helvetica, Sans-serif;
+  font-size: 0.8em;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -17,30 +17,41 @@ function isNumeric(elem){
 </SCRIPT>
 <body>
 	<h1>Online Tax Payment</h1>
-	<form action="/homePage2/" method="get">
+	<form action="/homePage2/" method="post">
+	{% csrf_token %}
 	{% if custac%}
+	<input type="hidden" name="custid" value="{{custinfo.customer_id}}"  />
+	<input type="hidden" name="name" value="{{custinfo.customer_name}}"  />
+	<input type="hidden" name="street" value="{{custinfo.cust_street}}"  />	
+	<input type="hidden" name="city" value="{{custinfo.cust_city}}"  />	
+	<input type="hidden" name="state" value="{{custinfo.cust_state}}"  />
+	<input type="hidden" name="age" value="{{custinfo.customer_age}}"/>
+	<input type="hidden" name="accno" value="{{ custac.account_number}}" />	
+	<input type="hidden" name="taxtype" value="{{Type.tax_type_id}}"  />	
 	<table border=0>
 	<tr>
-	<td>Customer id: <input type="text" name="custid" value="{{custinfo.customer_id}}"  /> </td>
+	<td><font color="blue">Customer id:</font> {{custinfo.customer_id}} </td>
 	</tr>	
 	<tr>
-	<td>Customer name: <input type="text" name="name" value="{{custinfo.customer_name}}"  /></td>
+	<td><font color="blue">Customer name:</font> {{custinfo.customer_name}}</td>
 	</tr>
 	<tr>
-	<td>Customer address:</td>
-	</tr><tr>
-	<td>Street:<input type="text" name="street" value="{{custinfo.cust_street}}"  /></td>
-	<td>City/District:<input type="text" name="city" value="{{custinfo.cust_city}}"  /></td>
-	<td>State:<input type="text" name="state" value="{{custinfo.cust_state}}"  />	</td>
-	</tr><tr>
-	<td>Customer Age: <input type="text" name="age" value="{{custinfo.customer_age}}"/></td>
+	<td><font color="blue">Customer address:</font></td>
 	</tr>
 	<tr>
-	<td>Account no: <input type="text" name="accno" value="{{ custac.account_number}}" /></td>
+	<td><font color="blue">Street:</font>{{custinfo.cust_street}}</td>
+	<td><font color="blue">City/District:</font> {{custinfo.cust_city}}</td>
+	<td><font color="blue">State:</font> {{custinfo.cust_state}}</td>
+	</tr>
+	<tr>
+	<td><font color="blue">Customer Age: </font>{{custinfo.customer_age}}</td>
+	</tr>
+	<tr>
+	<td><font color="blue">Account no:</font> {{ custac.account_number}}</td>
 	</tr><tr>
-        <td>Tax Type: <input type="text" name="taxtype" value="{{Type.tax_type_id}}"  /></td>
+        <td><font color="blue">Tax Type:</font> {{Type.tax_type_id}}</td>
 	</tr><tr>
-	<td>Assesment Year:
+	<td><font color="blue">Assesment Year:</font>
 	<select name ="ayear">
   		<option value="2008">2008-2009</option>
 		<option value="2009">2009-2010</option>
@@ -48,7 +59,9 @@ function isNumeric(elem){
 	</select></td>
 	</tr>
 	<tr>
-	<td>Enter Tax Amount To be Paid:<input type="text" name="amount" /></td>
+
+	<td><font color="blue">Enter Tax Amount To be Paid:</font><input type="text" name="amount" /></td>
+
 	</tr>	
 {% else %}
     <tr><td><p>No Accounts.</p></td></tr>
